@@ -57,7 +57,7 @@ public class TableBuilder : IBuilder
     }
     public Furniture build()
     {
-        Furniture table = new Furniture(brand, type, colour, material, height, width, depth, price);
+        Furniture table = new Table(brand, type, colour, material, height, width, depth, price);
         Reset();
         return table;
     }

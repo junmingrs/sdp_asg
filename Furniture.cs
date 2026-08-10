@@ -1,6 +1,6 @@
-﻿namespace SDP_ASG;
+namespace SDP_ASG;
 
-public class Furniture : FurnitureComponent
+public abstract class Furniture : FurnitureComponent
 {
     private string brand;
     private string type;
@@ -31,12 +31,12 @@ public class Furniture : FurnitureComponent
         this.price = price;
     }
 
-    public string getDescription()
+    public virtual string getDescription()
     {
         return $"Furniture: {this.brand}, {this.type}, {this.colour}, {this.material} of {this.height}cm x{this.width}cm x{this.depth}cm, costing ${price}";
     }
 
-    public double getPrice()
+    public virtual double getPrice()
     {
         return this.price;
     }

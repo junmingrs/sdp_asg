@@ -57,7 +57,7 @@ public class BedBuilder : IBuilder
     }
     public Furniture build()
     {
-        Furniture bed = new Furniture(brand, type, colour, material, height, width, depth, price);
+        Furniture bed = new Bed(brand, type, colour, material, height, width, depth, price);
         Reset();
         return bed;
     }

@@ -57,7 +57,7 @@ public class SofaBuilder : IBuilder
     }
     public Furniture build()
     {
-        Furniture sofa = new Furniture(brand, type, colour, material, height, width, depth, price);
+        Furniture sofa = new Sofa(brand, type, colour, material, height, width, depth, price);
         Reset();
         return sofa;
     }

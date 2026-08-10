@@ -57,7 +57,7 @@ public class ChairBuilder : IBuilder
     }
     public Furniture build()
     {
-        Furniture chair = new Furniture(brand, type, colour, material, height, width, depth, price);
+        Furniture chair = new Chair(brand, type, colour, material, height, width, depth, price);
         Reset();
         return chair;
     }
