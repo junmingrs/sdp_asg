@@ -12,5 +12,22 @@ namespace SDP_ASG
         {
             this.order = order;
         }
+
+        public void requestPayment()
+        {
+
+        }
+        public void processPayment()
+        {
+
+        }
+        public void deliver()
+        {
+
+        }
+        public void archive()
+        {
+
+        }
     }
 }

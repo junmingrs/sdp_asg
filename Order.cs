@@ -14,7 +14,6 @@ namespace SDP_ASG
         private OrderState archived;
         private OrderState state;
 
-
         public Order()
         {
             created = new CreatedState(this);
@@ -25,6 +24,23 @@ namespace SDP_ASG
             archived = new ArchivedState(this);
 
             state = created;
+        }
+
+        public void requestPayment()
+        {
+
+        }
+        public void processPayment()
+        {
+
+        }
+        public void deliver()
+        {
+
+        }
+        public void archive()
+        {
+
         }
     }
 }

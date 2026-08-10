@@ -9,7 +9,6 @@ namespace SDP_ASG
         public void requestPayment();
         public void processPayment();
         public void deliver();
-        public void received();
         public void archive();
     }
 }
