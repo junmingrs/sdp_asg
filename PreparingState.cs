@@ -35,13 +35,21 @@ namespace SDP_ASG
         }
         public void deliver()
         {
-            Console.WriteLine(" ");
-            Console.WriteLine("Order is not Prepared yet!");
+            if (order.IsPrepared)
+            {
+                order.setState(order.OFD);
+            } else
+            {
+                Console.WriteLine(" ");
+                Console.WriteLine("Order is not Prepared yet!");
+            }
         }
         public void archive()
         {
+            order.refund();
+            order.setState(order.Archived);
             Console.WriteLine(" ");
-            Console.WriteLine("Order can't be Archived!");
+            Console.WriteLine("Order Cancelled.");
         }
     }
 }

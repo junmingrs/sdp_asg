@@ -15,6 +15,8 @@ namespace SDP_ASG
         private OrderState state;
 
         private string orderID;
+        private Boolean isPrepared;
+        private Boolean isCancelled;
         private double price;
         private string paymentType;
         private DateTime deliveryTime;
@@ -44,6 +46,16 @@ namespace SDP_ASG
         public List<OrderItem> OrderItems
         {
             get { return orderItems; }
+        }
+        public Boolean IsPrepared
+        {
+            get { return isPrepared; }
+            set { isPrepared = value; }
+        }
+        public Boolean IsCancelled
+        {
+            get { return isCancelled; }
+            set { IsCancelled = value; }
         }
         public OrderState Created
         {

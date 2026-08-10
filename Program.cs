@@ -54,7 +54,7 @@ void prepareOrder()
             selectOrder = o2;
         }
     }
-    selectOrder.setState(selectOrder.OFD);
+    selectOrder.IsPrepared = true;
     Console.WriteLine(" ");
     Console.WriteLine($"{selectOrder.OrderID} has been Prepared.");
     Console.WriteLine(" ");
@@ -92,9 +92,9 @@ void sendOrder()
             selectOrder = o2;
         }
     }
-    selectOrder.setState(selectOrder.OFD);
+    selectOrder.deliver();
     Console.WriteLine(" ");
-    Console.WriteLine($"{selectOrder.OrderID} has been Prepared.");
+    Console.WriteLine($"{selectOrder.OrderID} has been Sent Out.");
     Console.WriteLine(" ");
 }
 
@@ -106,7 +106,7 @@ void employeeConsole(Employee employee)
     Console.WriteLine("2. View Orders to Send");
     Console.WriteLine("3. filler");
     Console.WriteLine("4. err");
-    Console.WriteLine("5. Cancel Order");
+    Console.WriteLine("5. idk maybe");
     Console.Write("Select Option (0 to exit): ");
     int option = Convert.ToInt32(Console.ReadLine());
 
@@ -139,7 +139,7 @@ void customerConsole(Customer customer)
     Console.WriteLine("2. Create Order");
     Console.WriteLine("3. filler");
     Console.WriteLine("4. idk");
-    Console.WriteLine("5. err maybe");
+    Console.WriteLine("5. Cancel Order");
     Console.Write("Select Option (0 to exit): ");
     int option = Convert.ToInt32(Console.ReadLine());
 
@@ -190,6 +190,7 @@ void logIn()
             employeeEnd = false;
             while(!employeeEnd)
             {
+                Console.WriteLine(" ");
                 employeeConsole(maybeEmployee);
             }
         } else
@@ -207,6 +208,7 @@ void logIn()
             customerEnd = false;
             while (!customerEnd)
             {
+                Console.WriteLine(" ");
                 customerConsole(maybeCustomer);
             }
         } else
