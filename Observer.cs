@@ -1,6 +1,7 @@
 // Observer Pattern - Observer Interface
+namespace SDP_ASG;
 
-interface Observer
+public interface Observer
 {
     void update(SpecialOffer offer);
 }

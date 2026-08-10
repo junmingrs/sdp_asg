@@ -1,0 +1,42 @@
+﻿namespace SDP_ASG;
+
+public class FurnitureCategory : FurnitureComponent
+{
+    private List<FurnitureComponent> furnitureComponents;
+    private IIterator? typeIter = null;
+    private IIterator? brandIter = null;
+    private string category;
+    public string Category { get { return category; } set { category = value; } }
+
+    public FurnitureCategory(string category)
+    {
+        this.furnitureComponents = new List<FurnitureComponent>();
+        this.category = category;
+    }
+
+    public override void add(FurnitureComponent furnitureComponent)
+    {
+        this.furnitureComponents.Add(furnitureComponent);
+    }
+    public override void remove(FurnitureComponent furnitureComponent)
+    {
+        this.furnitureComponents.Remove(furnitureComponent);
+    }
+    public override IIterator createIterator(string iterType, string type)
+    {
+        if (iterType == "Brand")
+        {
+            this.brandIter = new BrandCompositeIterator(new BrandIterator(this.furnitureComponents, type), type);
+            return this.brandIter;
+        }
+        else
+        {
+            this.typeIter = new TypeCompositeIterator(new TypeIterator(this.furnitureComponents, type), type);
+            return this.typeIter;
+        }
+    }
+    public override void print()
+    {
+        Console.WriteLine($"FurnitureCategory: {this.category}");
+    }
+}

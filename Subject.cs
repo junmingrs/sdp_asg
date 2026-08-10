@@ -1,6 +1,7 @@
 // Observer Pattern - Subject Interface
+namespace SDP_ASG;
 
-interface Subject
+public interface Subject
 {
 	void registerObserver(Observer o);
 	void removeObserver(Observer o);
