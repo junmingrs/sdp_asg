@@ -1,0 +1,44 @@
+using System;
+using System.Collections.Generic;
+
+public class Brand : Subject
+{
+    private string brandName;
+    private List<Observer> observers;
+    private List<SpecialOffer> offers;
+
+    public Brand(string brandName)
+    {
+        this.brandName = brandName;
+        observers = new List<Observer>();
+        offers = new List<SpecialOffer>();
+    }
+
+    public void registerObserver(Observer o)
+    {
+        observers.Add(o);
+    }
+
+    public void removeObserver(Observer o)
+    {
+        observers.Remove(o);
+    }
+
+    public void notifyObservers()
+    {
+        foreach (Observer o in observers)
+        {
+            o.update(offers[offers.Count - 1]);
+        }
+    }
+
+    public void addSpecialOffer(SpecialOffer offer)
+    {
+        offers.Add(offer);
+        Console.WriteLine($"\n[{brandName}] New offer: {offer.getOfferName()} - {offer.getDiscount()}% off!");
+        notifyObservers();
+    }
+
+    public string getBrandName() { return brandName; }
+    public List<SpecialOffer> getOffers() { return offers; }
+}
