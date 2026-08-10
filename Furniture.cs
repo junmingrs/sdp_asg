@@ -9,6 +9,7 @@ public class Furniture : FurnitureComponent
     private int height;
     private int width;
     private int depth;
+    private double price;
 
     public string Brand { get { return brand; } set { brand = value; } }
     public string Type { get { return type; } set { type = value; } }
@@ -18,7 +19,7 @@ public class Furniture : FurnitureComponent
     public int Width { get { return width; } set { width = value; } }
     public int Depth { get { return depth; } set { depth = value; } }
 
-    public Furniture(string brand, string type, string colour, string material, int height, int width, int depth)
+    public Furniture(string brand, string type, string colour, string material, int height, int width, int depth, double price)
     {
         this.brand = brand;
         this.type = type;
@@ -27,6 +28,17 @@ public class Furniture : FurnitureComponent
         this.height = height;
         this.width = width;
         this.depth = depth;
+        this.price = price;
+    }
+
+    public string getDescription()
+    {
+        return $"Furniture: {this.brand}, {this.type}, {this.colour}, {this.material} of {this.height}cm x{this.width}cm x{this.depth}cm, costing ${price}";
+    }
+
+    public double getPrice()
+    {
+        return this.price;
     }
 
     public override IIterator createIterator(string iterType, string type)
@@ -35,6 +47,6 @@ public class Furniture : FurnitureComponent
     }
     public override void print()
     {
-        Console.WriteLine($"Furniture: {this.brand}, {this.type}, {this.colour}, {this.material} of {this.height}x{this.width}x{this.depth}");
+        Console.WriteLine(this.getDescription());
     }
 }

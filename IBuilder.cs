@@ -7,5 +7,6 @@ public interface IBuilder
     IBuilder setMaterial(string material);
     IBuilder setType(string type);
     IBuilder setBrand(string brand);
+    IBuilder setPrice(double price);
     Furniture build();
 }

@@ -9,6 +9,7 @@ public class ChairBuilder : IBuilder
     private string type = "Chair";
     private string colour = "White";
     private string material = "Wood";
+    private double price = 20.0;
 
     public ChairBuilder Reset()
     {
@@ -19,6 +20,7 @@ public class ChairBuilder : IBuilder
         this.type = "Chair";
         this.colour = "White";
         this.material = "Wood";
+        this.price = 20.0;
         return this;
     }
     public IBuilder setBrand(string brand)
@@ -48,9 +50,14 @@ public class ChairBuilder : IBuilder
         this.type = type;
         return this;
     }
+    public IBuilder setPrice(double price)
+    {
+        this.price = price;
+        return this;
+    }
     public Furniture build()
     {
-        Furniture chair = new Furniture(brand, type, colour, material, height, width, depth);
+        Furniture chair = new Furniture(brand, type, colour, material, height, width, depth, price);
         Reset();
         return chair;
     }

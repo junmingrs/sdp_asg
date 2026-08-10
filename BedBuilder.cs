@@ -9,6 +9,7 @@ public class BedBuilder : IBuilder
     private string type = "Bed";
     private string colour = "White";
     private string material = "Spring";
+    private double price = 50.0;
 
     public BedBuilder Reset()
     {
@@ -19,6 +20,7 @@ public class BedBuilder : IBuilder
         this.type = "Bed";
         this.colour = "White";
         this.material = "Spring";
+        this.price = 60.0;
         return this;
     }
     public IBuilder setBrand(string brand)
@@ -48,9 +50,14 @@ public class BedBuilder : IBuilder
         this.type = type;
         return this;
     }
+    public IBuilder setPrice(double price)
+    {
+        this.price = price;
+        return this;
+    }
     public Furniture build()
     {
-        Furniture bed = new Furniture(brand, type, colour, material, height, width, depth);
+        Furniture bed = new Furniture(brand, type, colour, material, height, width, depth, price);
         Reset();
         return bed;
     }
