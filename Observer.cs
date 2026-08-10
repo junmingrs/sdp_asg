@@ -1,6 +1,6 @@
 // Observer Pattern - Observer Interface
 
-interface Observer
+public interface Observer
 {
     void update(SpecialOffer offer);
 }

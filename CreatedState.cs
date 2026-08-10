@@ -13,21 +13,34 @@ namespace SDP_ASG
             this.order = order;
         }
 
-        public void requestPayment()
+        public void addItem(OrderItem item)
         {
-
+            order.OrderItems.Add(item);
+        }
+        public void removeItem(OrderItem item)
+        {
+            order.OrderItems.Remove(item);
+        }
+        public void submit()
+        {
+            Console.WriteLine(" ");
+            Console.WriteLine($"Submitting Order {order.OrderID}...");
+            order.setState(order.Submitted);
         }
         public void processPayment()
         {
-
+            Console.WriteLine(" ");
+            Console.WriteLine("Order is not Submitted yet!");
         }
         public void deliver()
         {
-
+            Console.WriteLine(" ");
+            Console.WriteLine("Order is not Out For Delivery yet!");
         }
         public void archive()
         {
-
+            Console.WriteLine(" ");
+            Console.WriteLine("Order can't be Archived!");
         }
     }
 }
