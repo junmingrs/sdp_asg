@@ -8,6 +8,7 @@ namespace SDP_ASG
         private string email;
         private string password;
         private string id;
+        private Command[] orderHist;
         private List<Order> orderList = new List<Order>();
         public string Name
         {
@@ -57,6 +58,23 @@ namespace SDP_ASG
         public void removeOrder(Order order)
         {
             orderList.Remove(order);
+        }
+        public void purhaseOrder(int slot)
+        {
+            orderList[slot].submit();
+            orderList[slot].processPayment();
+        }
+        public void cancelOrder(int slot)
+        {
+            orderList[slot].archive();
+        }
+        public void setOrderHist(Order order, int slot)
+        {
+            LastOrder prevOrder = new LastOrder(order, orderList.Count());
+        }
+        public void purchaseFromOrderHist(int slot)
+        {
+            orderHist[slot].purchase();
         }
     }
 }

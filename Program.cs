@@ -11,6 +11,9 @@ Employee em3 = new Employee("Test3", "IKEM0003");
 Customer cu1 = new Customer("Test1", "test1@email.com", "IKCUS0001");
 Customer cu2 = new Customer("Test2", "test2@email.com", "IKCUS0002");
 Customer cu3 = new Customer("Test3", "test3@email.com", "IKCUS0003");
+Furniture fur1 = new Sofa();
+Furniture fur2 = new Table();
+Furniture fur3 = new Chair();
 List<Employee> employeeList = new List<Employee>();
 List<Customer> customerList = new List<Customer>();
 List<Order> orderList = new List<Order>();
@@ -98,7 +101,6 @@ void sendOrder()
     Console.WriteLine(" ");
 }
 
-
 void employeeConsole(Employee employee)
 {
     Console.WriteLine($"Welcome {employee.Name}");
@@ -162,6 +164,11 @@ void logIn()
     Console.WriteLine("-- Select User --");
     Console.Write("Enter UserID (0 to Exit): ");
     string userID = Console.ReadLine();
+    if (Convert.ToInt32(userID) == 0)
+    {
+        Console.WriteLine(" ");
+        Console.WriteLine("Returning to Start Console");
+    }
     string userType = null;
     Employee maybeEmployee = null;
     Customer maybeCustomer = null;
@@ -236,8 +243,8 @@ void startConsole()
 
     if (option == 1)
     {
-        Boolean loginend = false;
-        while (!loginend)
+        Boolean loginEnd = false;
+        while (!loginEnd)
         {
             logIn();
         }
