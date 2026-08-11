@@ -11,7 +11,7 @@ public class ChairBuilder : IBuilder
     private string material = "Wood";
     private double price = 20.0;
 
-    public ChairBuilder Reset()
+    public IBuilder Reset()
     {
         this.brand = "ICKER";
         this.height = 10;

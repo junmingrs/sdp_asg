@@ -8,5 +8,6 @@ public interface IBuilder
     IBuilder setType(string type);
     IBuilder setBrand(string brand);
     IBuilder setPrice(double price);
+    IBuilder Reset();
     Furniture build();
 }

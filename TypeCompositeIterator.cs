@@ -5,7 +5,7 @@ public class TypeCompositeIterator : IIterator
     private Stack<IIterator> stack = new Stack<IIterator>();
     private string type;
 
-    public TypeCompositeIterator(IIterator iter, string type) // NOTE: better to use IIterator
+    public TypeCompositeIterator(IIterator iter, string type)
     {
         stack.Push(iter);
         this.type = type;
@@ -22,10 +22,7 @@ public class TypeCompositeIterator : IIterator
             stack.Pop();
             return hasNext();
         }
-        else
-        {
-            return true;
-        }
+        return true;
     }
     public Object? next()
     {

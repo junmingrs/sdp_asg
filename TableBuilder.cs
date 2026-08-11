@@ -11,7 +11,7 @@ public class TableBuilder : IBuilder
     private string material = "Wood";
     private double price = 30.0;
 
-    public TableBuilder Reset()
+    public IBuilder Reset()
     {
         this.brand = "ICKER";
         this.height = 10;

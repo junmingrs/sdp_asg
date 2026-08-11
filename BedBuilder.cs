@@ -11,7 +11,7 @@ public class BedBuilder : IBuilder
     private string material = "Spring";
     private double price = 50.0;
 
-    public BedBuilder Reset()
+    public IBuilder Reset()
     {
         this.brand = "ICKER";
         this.height = 10;
@@ -20,7 +20,7 @@ public class BedBuilder : IBuilder
         this.type = "Bed";
         this.colour = "White";
         this.material = "Spring";
-        this.price = 60.0;
+        this.price = 50.0;
         return this;
     }
     public IBuilder setBrand(string brand)
