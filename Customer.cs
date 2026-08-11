@@ -1,4 +1,4 @@
-using System;
+namespace SDP_ASG;
 
 public class Customer : Observer
 {
