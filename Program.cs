@@ -181,24 +181,29 @@ void AddOffer(List<Brand> brands)
     }
     else Console.WriteLine("Invalid choice.");
 }
- 
+
 void AddAddOns(FurnitureComponent root)
 {
-    Console.Write("Enter furniture type to add-on (e.g. Sofa): ");
+    Console.Write("Enter furniture type (e.g. Sofa): ");
     string type = Console.ReadLine() ?? "";
     IIterator it = root.createIterator("Type", type);
-    if (!it.hasNext()) { Console.WriteLine("No furniture found."); return; }
- 
-    FurnitureComponent c = (FurnitureComponent)it.next()!;
-    if (c is not Furniture furniture) { Console.WriteLine("Not a furniture."); return; }
- 
+
+    Furniture furniture = null;
+    while (it.hasNext())
+    {
+        FurnitureComponent c = (FurnitureComponent)it.next()!;
+        if (c is Furniture f) { furniture = f; break; }
+    }
+
+    if (furniture == null) { Console.WriteLine("No furniture found."); return; }
+
     Console.WriteLine($"Selected: {furniture.getDescription()} - ${furniture.getPrice():F2}");
- 
+
     Console.Write("Add warranty? (1 = 1 year, 2 = 2 years, 0 = no): ");
     string w = Console.ReadLine() ?? "0";
     if (w == "1") furniture = new WarrantyDecorator(furniture, 1);
     else if (w == "2") furniture = new WarrantyDecorator(furniture, 2);
- 
+
     Console.Write("Add installation? (y/n): ");
     if ((Console.ReadLine() ?? "").ToLower() == "y")
     {
@@ -206,7 +211,7 @@ void AddAddOns(FurnitureComponent root)
         string date = Console.ReadLine() ?? "";
         furniture = new InstallationDecorator(furniture, date);
     }
- 
+
     Console.WriteLine($"\n✓ Final: {furniture.getDescription()} - ${furniture.getPrice():F2}");
 }
 
