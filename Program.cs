@@ -4,24 +4,24 @@ IBuilder sofaBuilder = new SofaBuilder();
 IBuilder tableBuilder = new TableBuilder();
 IBuilder chairBuilder = new ChairBuilder();
 IBuilder bedBuilder = new BedBuilder();
- 
+
 FurnitureComponent root = new FurnitureCategory("root");
 FurnitureComponent living = new FurnitureCategory("living");
 FurnitureComponent bedroom = new FurnitureCategory("bedroom");
- 
+
 living.add(sofaBuilder.setColour("Grey").setMaterial("Fabric").setDimensions(80, 30, 95).setBrand("ICKER").setType("Sofa").setPrice(500).build());
 living.add(tableBuilder.setColour("Brown").setMaterial("Wood").setDimensions(120, 75, 60).setBrand("ICKER").setType("Table").setPrice(300).build());
 bedroom.add(bedBuilder.setColour("White").setMaterial("Wood").setDimensions(200, 120, 50).setBrand("ICKER").setType("Bed").setPrice(800).build());
 bedroom.add(chairBuilder.setColour("Black").setMaterial("Leather").setDimensions(60, 28, 25).setBrand("ICKER").setType("Chair").setPrice(150).build());
 root.add(living);
 root.add(bedroom);
- 
+
 Brand ikea = new Brand("IKEA");
 Brand ashley = new Brand("Ashley");
 List<Brand> brands = new List<Brand> { ikea, ashley };
 List<Customer> customers = new List<Customer>();
 Customer? currentCustomer = null;
- 
+
 // ── MAIN MENU ──────────────────────────────────
 int choice = -1;
 while (choice != 0)
@@ -43,9 +43,9 @@ while (choice != 0)
     Console.WriteLine("10) Add furniture to catalog");
     Console.WriteLine("0) Exit");
     Console.Write("Your choice? ");
- 
+
     if (!int.TryParse(Console.ReadLine(), out choice)) choice = -1;
- 
+
     switch (choice)
     {
         case 1: CreateCustomer(customers); break;
@@ -57,14 +57,25 @@ while (choice != 0)
         case 7: ViewOffers(brands); break;
         case 8: AddOffer(brands); break;
         case 9: AddAddOns(root); break;
-        case 10: AddFurniture(root); break;
+        // case 10: AddFurniture(root); break;
+        case 10: iterateEverything(); break;
         case 0: Console.WriteLine("Thank you for visiting ICKIER!"); break;
         default: Console.WriteLine("Invalid choice."); break;
     }
 }
- 
+
 // ── METHODS ──────────────────────────────────
- 
+
+void iterateEverything()
+{
+    IIterator iter = root.createIterator("Normal", "");
+    while (iter.hasNext())
+    {
+        FurnitureComponent fc = (FurnitureComponent)iter.next();
+        fc.print();
+    }
+}
+
 void CreateCustomer(List<Customer> customers)
 {
     Console.Write("Enter name: ");
@@ -74,7 +85,7 @@ void CreateCustomer(List<Customer> customers)
     customers.Add(new Customer(name, email));
     Console.WriteLine($"Customer {name} created!");
 }
- 
+
 Customer? Login(List<Customer> customers)
 {
     if (customers.Count == 0) { Console.WriteLine("No customers yet."); return null; }
@@ -89,7 +100,7 @@ Customer? Login(List<Customer> customers)
     }
     Console.WriteLine("Invalid choice."); return null;
 }
- 
+
 void BrowseByType(FurnitureComponent root)
 {
     Console.Write("Enter type (e.g. Sofa, Table, Bed, Chair): ");
@@ -104,7 +115,7 @@ void BrowseByType(FurnitureComponent root)
     }
     if (!found) Console.WriteLine("No furniture found.");
 }
- 
+
 void BrowseByBrand(FurnitureComponent root)
 {
     Console.Write("Enter brand: ");
@@ -119,7 +130,7 @@ void BrowseByBrand(FurnitureComponent root)
     }
     if (!found) Console.WriteLine("No furniture found.");
 }
- 
+
 void Subscribe(Customer? customer, List<Brand> brands)
 {
     if (customer == null) { Console.WriteLine("Please login first."); return; }
@@ -134,7 +145,7 @@ void Subscribe(Customer? customer, List<Brand> brands)
     }
     else Console.WriteLine("Invalid choice.");
 }
- 
+
 void Unsubscribe(Customer? customer, List<Brand> brands)
 {
     if (customer == null) { Console.WriteLine("Please login first."); return; }
@@ -149,7 +160,7 @@ void Unsubscribe(Customer? customer, List<Brand> brands)
     }
     else Console.WriteLine("Invalid choice.");
 }
- 
+
 void ViewOffers(List<Brand> brands)
 {
     Console.WriteLine("\n--- Brands & Special Offers ---");
@@ -159,10 +170,10 @@ void ViewOffers(List<Brand> brands)
         var offers = b.getOffers();
         if (offers.Count == 0) Console.WriteLine("  No offers.");
         else foreach (var o in offers)
-            Console.WriteLine($"  - {o.getOfferName()}: {o.getDiscount()}% off");
+                Console.WriteLine($"  - {o.getOfferName()}: {o.getDiscount()}% off");
     }
 }
- 
+
 void AddOffer(List<Brand> brands)
 {
     Console.WriteLine("Select brand:");
