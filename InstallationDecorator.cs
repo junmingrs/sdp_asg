@@ -1,5 +1,5 @@
 // Decorator Pattern - InstallationDecorator (ConcreteDecorator)
-
+namespace SDP_ASG;
 
 public class InstallationDecorator : FurnitureDecorator
 {

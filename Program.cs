@@ -1,4 +1,5 @@
 ﻿using SDP_ASG;
+using SDP_ASG.SDP_ASG;
 
 Boolean end = false;
 Boolean employeeEnd = false;
@@ -24,6 +25,91 @@ employeeList.Add(em3);
 customerList.Add(cu1);
 customerList.Add(cu2);
 customerList.Add(cu3);
+
+IBuilder sofaBuilder = new SofaBuilder();
+IBuilder tableBuilder = new TableBuilder();
+IBuilder chairBuilder = new ChairBuilder();
+IBuilder bedBuilder = new BedBuilder();
+
+FurnitureComponent root = new FurnitureCategory("root");
+FurnitureComponent living = new FurnitureCategory("living");
+living.add(sofaBuilder.setColour("Grey").setMaterial("Fabric").setDimensions(80, 30, 95).build());
+living.add(sofaBuilder.setColour("Grey").setMaterial("Fabric").setDimensions(80, 30, 95).setBrand("Lmon").build());
+living.add(chairBuilder.setType("Armchair").setColour("Brown").setMaterial("Leather").setDimensions(60, 28, 25).build());
+root.add(living);
+
+Console.WriteLine("=== TYPE ITERATOR DEMO ===");
+IIterator type = root.createIterator("Type", "Sofa");
+while (type.hasNext())
+{
+    FurnitureComponent c = (FurnitureComponent)type.next()!;
+    if (c is Furniture)
+    {
+        Furniture f = (Furniture)c;
+        Console.WriteLine($"{f.Brand}, {f.Type}");
+    }
+}
+Console.WriteLine();
+Console.WriteLine("=== BRAND ITERATOR DEMO ===");
+IIterator brand = root.createIterator("Brand", "Lmon");
+while (brand.hasNext())
+{
+    FurnitureComponent c = (FurnitureComponent)brand.next()!;
+    c.print();
+}
+
+// ── OBSERVER PATTERN DEMO ──────────────────────
+ 
+// Create brands
+Brand ikea = new Brand("IKEA");
+Brand ashley = new Brand("Ashley");
+
+// Create customers
+Customer alice = new Customer("Alice", "alice@email.com");
+Customer bob = new Customer("Bob", "bob@email.com");
+
+// Subscribe to brands
+ikea.registerObserver(alice);
+ikea.registerObserver(bob);
+ashley.registerObserver(alice);
+
+Console.WriteLine();
+Console.WriteLine("=== Observer Pattern Demo ===");
+
+// IKEA adds offer - both Alice and Bob notified
+ikea.addSpecialOffer(new SpecialOffer("Summer Sale", 20.0, ikea));
+
+// Bob unsubscribes
+ikea.removeObserver(bob);
+Console.WriteLine("\nBob unsubscribed from IKEA.");
+
+// IKEA adds another offer - only Alice notified
+ikea.addSpecialOffer(new SpecialOffer("Flash Sale", 50.0, ikea));
+
+// Ashley adds offer - only Alice notified
+ashley.addSpecialOffer(new SpecialOffer("Clearance", 30.0, ashley));
+
+// ── DECORATOR PATTERN DEMO ──────────────────────
+
+Console.WriteLine("\n=== Decorator Pattern Demo ===");
+
+// Create furniture using Jun Ming's builder
+Furniture sofa = sofaBuilder
+    .setColour("Grey")
+    .setMaterial("Fabric")
+    .setDimensions(80, 30, 95)
+    .setPrice(500)
+    .build();
+
+Console.WriteLine($"Base: {sofa.getDescription()}");
+
+// Add warranty
+Furniture sofaWithWarranty = new WarrantyDecorator(sofa, 2);
+Console.WriteLine($"After Warranty: {sofaWithWarranty.getDescription()} - ${sofaWithWarranty.getPrice():F2}");
+
+// Add installation
+Furniture sofaWithAll = new InstallationDecorator(sofaWithWarranty, "2026-09-01");
+Console.WriteLine($"After Installation: {sofaWithAll.getDescription()} - ${sofaWithAll.getPrice():F2}");
 
 void prepareOrder()
 {
@@ -117,14 +203,16 @@ void employeeConsole(Employee employee)
         employeeEnd = true;
         Console.WriteLine(" ");
         Console.WriteLine("Exiting Employee Console...");
-    } else if (option == 1)
+    }
+    else if (option == 1)
     {
-        prepareEnd = false; 
+        prepareEnd = false;
         while (!prepareEnd)
         {
             prepareOrder();
         }
-    } else if (option == 2)
+    }
+    else if (option == 2)
     {
         sendEnd = false;
         while (!sendEnd)
@@ -150,10 +238,12 @@ void customerConsole(Customer customer)
         customerEnd = true;
         Console.WriteLine(" ");
         Console.WriteLine("Exiting Customer Console...");
-    } else if (option == 1)
+    }
+    else if (option == 1)
     {
         Console.WriteLine("catalog go here whee");
-    } else if (option == 2)
+    }
+    else if (option == 2)
     {
         Console.WriteLine(" Order go here ");
     }
@@ -195,18 +285,20 @@ void logIn()
         if (maybeEmployee.logIn(Password))
         {
             employeeEnd = false;
-            while(!employeeEnd)
+            while (!employeeEnd)
             {
                 Console.WriteLine(" ");
                 employeeConsole(maybeEmployee);
             }
-        } else
+        }
+        else
         {
             Console.WriteLine(" ");
             Console.WriteLine("Incorrect Password!");
             Console.WriteLine(" ");
         }
-    } else if (userType == "Customer")
+    }
+    else if (userType == "Customer")
     {
         Console.Write("Enter Password: ");
         string Password = Console.ReadLine();
@@ -218,13 +310,15 @@ void logIn()
                 Console.WriteLine(" ");
                 customerConsole(maybeCustomer);
             }
-        } else
+        }
+        else
         {
             Console.WriteLine(" ");
             Console.WriteLine("Incorrect Password!");
             Console.WriteLine(" ");
         }
-    } else
+    }
+    else
     {
         Console.WriteLine(" ");
         Console.WriteLine("UserID is Invalid!");
@@ -248,7 +342,8 @@ void startConsole()
         {
             logIn();
         }
-    } else if (option == 2)
+    }
+    else if (option == 2)
     {
         Console.WriteLine("See You Again Soon!");
         end = true;

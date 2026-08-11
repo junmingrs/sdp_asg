@@ -1,4 +1,5 @@
 // SpecialOffer - represents a special offer from a brand
+namespace SDP_ASG;
 
 public class SpecialOffer
 {
