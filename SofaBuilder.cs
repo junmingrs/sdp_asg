@@ -11,7 +11,7 @@ public class SofaBuilder : IBuilder
     private string material = "Fabric";
     private double price = 50.0;
 
-    public SofaBuilder Reset()
+    public IBuilder Reset()
     {
         this.brand = "ICKER";
         this.height = 10;
