@@ -7,32 +7,8 @@
       "RelativeMoniker": "D:0:0:{803FEEBE-7E3F-E353-6EAA-B0751D1CAB79}|SDP_ASG.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{803FEEBE-7E3F-E353-6EAA-B0751D1CAB79}|SDP_ASG.csproj|c:\\users\\lenovo\\desktop\\np\\year 2\\software design patterns\\sdp asg\\ofdstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{803FEEBE-7E3F-E353-6EAA-B0751D1CAB79}|SDP_ASG.csproj|solutionrelative:ofdstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{803FEEBE-7E3F-E353-6EAA-B0751D1CAB79}|SDP_ASG.csproj|c:\\users\\lenovo\\desktop\\np\\year 2\\software design patterns\\sdp asg\\preparingstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{803FEEBE-7E3F-E353-6EAA-B0751D1CAB79}|SDP_ASG.csproj|solutionrelative:preparingstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{803FEEBE-7E3F-E353-6EAA-B0751D1CAB79}|SDP_ASG.csproj|c:\\users\\lenovo\\desktop\\np\\year 2\\software design patterns\\sdp asg\\submittedstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{803FEEBE-7E3F-E353-6EAA-B0751D1CAB79}|SDP_ASG.csproj|solutionrelative:submittedstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{803FEEBE-7E3F-E353-6EAA-B0751D1CAB79}|SDP_ASG.csproj|c:\\users\\lenovo\\desktop\\np\\year 2\\software design patterns\\sdp asg\\orderstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{803FEEBE-7E3F-E353-6EAA-B0751D1CAB79}|SDP_ASG.csproj|solutionrelative:orderstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{803FEEBE-7E3F-E353-6EAA-B0751D1CAB79}|SDP_ASG.csproj|c:\\users\\lenovo\\desktop\\np\\year 2\\software design patterns\\sdp asg\\deliveredstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{803FEEBE-7E3F-E353-6EAA-B0751D1CAB79}|SDP_ASG.csproj|solutionrelative:deliveredstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{803FEEBE-7E3F-E353-6EAA-B0751D1CAB79}|SDP_ASG.csproj|c:\\users\\lenovo\\desktop\\np\\year 2\\software design patterns\\sdp asg\\createdstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{803FEEBE-7E3F-E353-6EAA-B0751D1CAB79}|SDP_ASG.csproj|solutionrelative:createdstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{803FEEBE-7E3F-E353-6EAA-B0751D1CAB79}|SDP_ASG.csproj|c:\\users\\lenovo\\desktop\\np\\year 2\\software design patterns\\sdp asg\\archivedstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{803FEEBE-7E3F-E353-6EAA-B0751D1CAB79}|SDP_ASG.csproj|solutionrelative:archivedstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{803FEEBE-7E3F-E353-6EAA-B0751D1CAB79}|SDP_ASG.csproj|c:\\users\\lenovo\\desktop\\np\\year 2\\software design patterns\\sdp asg\\customer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{803FEEBE-7E3F-E353-6EAA-B0751D1CAB79}|SDP_ASG.csproj|solutionrelative:customer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{803FEEBE-7E3F-E353-6EAA-B0751D1CAB79}|SDP_ASG.csproj|c:\\users\\lenovo\\desktop\\np\\year 2\\software design patterns\\sdp asg\\order.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -56,7 +32,7 @@
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "C:\\Users\\Lenovo\\Desktop\\Np\\Year 2\\Software Design Patterns\\SDP ASG\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAoAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-07-28T05:47:43.331Z",
               "IsPinned": true,
@@ -64,106 +40,28 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "PreparingState.cs",
-              "DocumentMoniker": "C:\\Users\\Lenovo\\Desktop\\Np\\Year 2\\Software Design Patterns\\SDP ASG\\PreparingState.cs",
-              "RelativeDocumentMoniker": "PreparingState.cs",
-              "ToolTip": "C:\\Users\\Lenovo\\Desktop\\Np\\Year 2\\Software Design Patterns\\SDP ASG\\PreparingState.cs",
-              "RelativeToolTip": "PreparingState.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-04T03:26:39.004Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "CreatedState.cs",
-              "DocumentMoniker": "C:\\Users\\Lenovo\\Desktop\\Np\\Year 2\\Software Design Patterns\\SDP ASG\\CreatedState.cs",
-              "RelativeDocumentMoniker": "CreatedState.cs",
-              "ToolTip": "C:\\Users\\Lenovo\\Desktop\\Np\\Year 2\\Software Design Patterns\\SDP ASG\\CreatedState.cs",
-              "RelativeToolTip": "CreatedState.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-04T02:20:24.735Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "DeliveredState.cs",
-              "DocumentMoniker": "C:\\Users\\Lenovo\\Desktop\\Np\\Year 2\\Software Design Patterns\\SDP ASG\\DeliveredState.cs",
-              "RelativeDocumentMoniker": "DeliveredState.cs",
-              "ToolTip": "C:\\Users\\Lenovo\\Desktop\\Np\\Year 2\\Software Design Patterns\\SDP ASG\\DeliveredState.cs",
-              "RelativeToolTip": "DeliveredState.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-04T02:23:01.554Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "SubmittedState.cs",
-              "DocumentMoniker": "C:\\Users\\Lenovo\\Desktop\\Np\\Year 2\\Software Design Patterns\\SDP ASG\\SubmittedState.cs",
-              "RelativeDocumentMoniker": "SubmittedState.cs",
-              "ToolTip": "C:\\Users\\Lenovo\\Desktop\\Np\\Year 2\\Software Design Patterns\\SDP ASG\\SubmittedState.cs",
-              "RelativeToolTip": "SubmittedState.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-04T02:20:32.859Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "OFDState.cs",
-              "DocumentMoniker": "C:\\Users\\Lenovo\\Desktop\\Np\\Year 2\\Software Design Patterns\\SDP ASG\\OFDState.cs",
-              "RelativeDocumentMoniker": "OFDState.cs",
-              "ToolTip": "C:\\Users\\Lenovo\\Desktop\\Np\\Year 2\\Software Design Patterns\\SDP ASG\\OFDState.cs",
-              "RelativeToolTip": "OFDState.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAAJAAAAAAAAAA==",
+              "Title": "Customer.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Desktop\\Np\\Year 2\\Software Design Patterns\\SDP ASG\\Customer.cs",
+              "RelativeDocumentMoniker": "Customer.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Desktop\\Np\\Year 2\\Software Design Patterns\\SDP ASG\\Customer.cs",
+              "RelativeToolTip": "Customer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-04T02:22:52.412Z",
+              "WhenOpened": "2026-08-11T02:33:23.203Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "ArchivedState.cs",
-              "DocumentMoniker": "C:\\Users\\Lenovo\\Desktop\\Np\\Year 2\\Software Design Patterns\\SDP ASG\\ArchivedState.cs",
-              "RelativeDocumentMoniker": "ArchivedState.cs",
-              "ToolTip": "C:\\Users\\Lenovo\\Desktop\\Np\\Year 2\\Software Design Patterns\\SDP ASG\\ArchivedState.cs",
-              "RelativeToolTip": "ArchivedState.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-04T02:26:08.329Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 2,
               "Title": "Order.cs",
               "DocumentMoniker": "C:\\Users\\Lenovo\\Desktop\\Np\\Year 2\\Software Design Patterns\\SDP ASG\\Order.cs",
               "RelativeDocumentMoniker": "Order.cs",
               "ToolTip": "C:\\Users\\Lenovo\\Desktop\\Np\\Year 2\\Software Design Patterns\\SDP ASG\\Order.cs",
               "RelativeToolTip": "Order.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAAwCsAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAG4AAAAAAAAAAAAxwHUAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-04T02:19:57.665Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "OrderState.cs",
-              "DocumentMoniker": "C:\\Users\\Lenovo\\Desktop\\Np\\Year 2\\Software Design Patterns\\SDP ASG\\OrderState.cs",
-              "RelativeDocumentMoniker": "OrderState.cs",
-              "ToolTip": "C:\\Users\\Lenovo\\Desktop\\Np\\Year 2\\Software Design Patterns\\SDP ASG\\OrderState.cs",
-              "RelativeToolTip": "OrderState.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAeAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-04T02:20:07.708Z",
+              "WhenOpened": "2026-08-11T02:30:20.103Z",
               "EditorCaption": ""
             }
           ]

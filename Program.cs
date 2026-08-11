@@ -1,7 +1,5 @@
-﻿
 using SDP_ASG;
- 
-// ── SETUP DATA ──────────────────────────────────
+
 IBuilder sofaBuilder = new SofaBuilder();
 IBuilder tableBuilder = new TableBuilder();
 IBuilder chairBuilder = new ChairBuilder();
@@ -32,7 +30,7 @@ while (choice != 0)
     Console.WriteLine("   Welcome to ICKIER Store!");
     Console.WriteLine("=============================");
     if (currentCustomer != null)
-        Console.WriteLine($"   Logged in as: {currentCustomer.getName()}");
+        Console.WriteLine($"   Logged in as: {currentCustomer.Name}");
     Console.WriteLine("1) Create new customer");
     Console.WriteLine("2) Login as customer");
     Console.WriteLine("3) Browse furniture by type");
@@ -82,11 +80,11 @@ Customer? Login(List<Customer> customers)
     if (customers.Count == 0) { Console.WriteLine("No customers yet."); return null; }
     Console.WriteLine("Select customer:");
     for (int i = 0; i < customers.Count; i++)
-        Console.WriteLine($"{i + 1}) {customers[i].getName()}");
+        Console.WriteLine($"{i + 1}) {customers[i].Name}");
     Console.Write("Your choice? ");
     if (int.TryParse(Console.ReadLine(), out int idx) && idx >= 1 && idx <= customers.Count)
     {
-        Console.WriteLine($"Logged in as {customers[idx - 1].getName()}!");
+        Console.WriteLine($"Logged in as {customers[idx - 1].Name}!");
         return customers[idx - 1];
     }
     Console.WriteLine("Invalid choice."); return null;
@@ -132,7 +130,7 @@ void Subscribe(Customer? customer, List<Brand> brands)
     if (int.TryParse(Console.ReadLine(), out int idx) && idx >= 1 && idx <= brands.Count)
     {
         brands[idx - 1].registerObserver(customer);
-        Console.WriteLine($"{customer.getName()} subscribed to {brands[idx - 1].getBrandName()}!");
+        Console.WriteLine($"{customer.Name} subscribed to {brands[idx - 1].getBrandName()}!");
     }
     else Console.WriteLine("Invalid choice.");
 }
@@ -147,7 +145,7 @@ void Unsubscribe(Customer? customer, List<Brand> brands)
     if (int.TryParse(Console.ReadLine(), out int idx) && idx >= 1 && idx <= brands.Count)
     {
         brands[idx - 1].removeObserver(customer);
-        Console.WriteLine($"{customer.getName()} unsubscribed from {brands[idx - 1].getBrandName()}.");
+        Console.WriteLine($"{customer.Name} unsubscribed from {brands[idx - 1].getBrandName()}.");
     }
     else Console.WriteLine("Invalid choice.");
 }
