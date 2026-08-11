@@ -1,5 +1,4 @@
 ﻿using SDP_ASG;
-using SDP_ASG.SDP_ASG;
 
 Boolean end = false;
 Boolean employeeEnd = false;
@@ -9,22 +8,13 @@ Boolean sendEnd = false;
 Employee em1 = new Employee("Test1", "IKEM0001");
 Employee em2 = new Employee("Test2", "IKEM0002");
 Employee em3 = new Employee("Test3", "IKEM0003");
-Customer cu1 = new Customer("Test1", "test1@email.com", "IKCUS0001");
-Customer cu2 = new Customer("Test2", "test2@email.com", "IKCUS0002");
-Customer cu3 = new Customer("Test3", "test3@email.com", "IKCUS0003");
-Furniture fur1 = new Sofa();
-Furniture fur2 = new Table();
-Furniture fur3 = new Chair();
+
 List<Employee> employeeList = new List<Employee>();
 List<Customer> customerList = new List<Customer>();
 List<Order> orderList = new List<Order>();
 employeeList.Add(em1);
 employeeList.Add(em2);
 employeeList.Add(em3);
-
-customerList.Add(cu1);
-customerList.Add(cu2);
-customerList.Add(cu3);
 
 IBuilder sofaBuilder = new SofaBuilder();
 IBuilder tableBuilder = new TableBuilder();
@@ -65,9 +55,11 @@ Brand ikea = new Brand("IKEA");
 Brand ashley = new Brand("Ashley");
 
 // Create customers
-Customer alice = new Customer("Alice", "alice@email.com");
-Customer bob = new Customer("Bob", "bob@email.com");
+Customer alice = new Customer("Alice", "alice@email.com", "IKCUS0001");
+Customer bob = new Customer("Bob", "bob@email.com", "IKCUS0002");
 
+customerList.Add(alice);
+customerList.Add(bob);
 // Subscribe to brands
 ikea.registerObserver(alice);
 ikea.registerObserver(bob);
@@ -192,7 +184,7 @@ void employeeConsole(Employee employee)
     Console.WriteLine($"Welcome {employee.Name}");
     Console.WriteLine("1. View Orders to Prepare");
     Console.WriteLine("2. View Orders to Send");
-    Console.WriteLine("3. filler");
+    Console.WriteLine("3. Create new Catalog Item");
     Console.WriteLine("4. err");
     Console.WriteLine("5. idk maybe");
     Console.Write("Select Option (0 to exit): ");
@@ -246,6 +238,31 @@ void customerConsole(Customer customer)
     else if (option == 2)
     {
         Console.WriteLine(" Order go here ");
+    } else if (option == 5)
+    {
+        int i = 1;
+        Console.WriteLine("--- Cancel Order ---");
+        foreach(Order order in customer.OrderList)
+        {
+            if (order.State is not ArchivedState)
+            {
+                Console.WriteLine($"{i}. {order.OrderID} - {order.State}");
+            }
+        }
+        Console.WriteLine(" ");
+        Console.WriteLine("Select an Order to Cancel");
+        Console.Write("Enter 0 to exit: ");
+        int cancelOrder = Convert.ToInt32(Console.ReadLine());
+        if (cancelOrder == 0)
+        {
+            Console.WriteLine(" ");
+            Console.WriteLine("Returning to Customer Console");
+            Console.WriteLine(" ");
+        }
+        else
+        {
+            customer.cancelOrder(cancelOrder);
+        }
     }
 }
 

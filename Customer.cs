@@ -1,4 +1,4 @@
-namespace SDP_ASG;
+
 
 namespace SDP_ASG 
 {
@@ -22,7 +22,10 @@ namespace SDP_ASG
         {
             get { return id; }
         }
-
+        public List<Order> OrderList
+        {
+            get { return orderList; }
+        }
         public Customer()
         {
             name = null;
