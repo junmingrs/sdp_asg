@@ -5,6 +5,7 @@ public class FurnitureCategory : FurnitureComponent
     private List<FurnitureComponent> furnitureComponents;
     private IIterator? typeIter = null;
     private IIterator? brandIter = null;
+    private IIterator? iter = null;
     private string category;
     public string Category { get { return category; } set { category = value; } }
 
@@ -29,10 +30,15 @@ public class FurnitureCategory : FurnitureComponent
             this.brandIter = new BrandCompositeIterator(new BrandIterator(this.furnitureComponents, type), type);
             return this.brandIter;
         }
-        else
+        else if (iterType == "Type")
         {
             this.typeIter = new TypeCompositeIterator(new TypeIterator(this.furnitureComponents, type), type);
             return this.typeIter;
+        }
+        else
+        {
+            this.iter = new CompositeIterator(new Iterator(this.furnitureComponents));
+            return this.iter;
         }
     }
     public override void print()

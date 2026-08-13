@@ -4,18 +4,18 @@ IBuilder sofaBuilder = new SofaBuilder();
 IBuilder tableBuilder = new TableBuilder();
 IBuilder chairBuilder = new ChairBuilder();
 IBuilder bedBuilder = new BedBuilder();
- 
+
 FurnitureComponent root = new FurnitureCategory("root");
 FurnitureComponent living = new FurnitureCategory("living");
 FurnitureComponent bedroom = new FurnitureCategory("bedroom");
- 
+
 living.add(sofaBuilder.setColour("Grey").setMaterial("Fabric").setDimensions(80, 30, 95).setBrand("ICKER").setType("Sofa").setPrice(500).build());
 living.add(tableBuilder.setColour("Brown").setMaterial("Wood").setDimensions(120, 75, 60).setBrand("ICKER").setType("Table").setPrice(300).build());
 bedroom.add(bedBuilder.setColour("White").setMaterial("Wood").setDimensions(200, 120, 50).setBrand("ICKER").setType("Bed").setPrice(800).build());
 bedroom.add(chairBuilder.setColour("Black").setMaterial("Leather").setDimensions(60, 28, 25).setBrand("ICKER").setType("Chair").setPrice(150).build());
 root.add(living);
 root.add(bedroom);
- 
+
 Brand ikea = new Brand("IKEA");
 Brand ashley = new Brand("Ashley");
 Customer Custtest1 = new Customer("Dummy1", "thisisafake@email.com", "ICKCUS0001");
@@ -42,9 +42,9 @@ while (choice != 0)
     // Console.WriteLine("4) Create new Employee");
     Console.WriteLine("0) Exit");
     Console.Write("Your choice? ");
- 
+
     if (!int.TryParse(Console.ReadLine(), out choice)) choice = -1;
- 
+
     switch (choice)
     {
         case 1: CreateCustomer(customers); break;
@@ -55,9 +55,19 @@ while (choice != 0)
         default: Console.WriteLine("Invalid choice."); break;
     }
 }
- 
+
 // ── METHODS ──────────────────────────────────
- 
+
+void iterateEverything()
+{
+    IIterator iter = root.createIterator("Normal", "");
+    while (iter.hasNext())
+    {
+        FurnitureComponent fc = (FurnitureComponent)iter.next();
+        fc.print();
+    }
+}
+
 void CreateCustomer(List<Customer> customers)
 {
     Console.Write("\nEnter name: ");
@@ -70,7 +80,7 @@ void CreateCustomer(List<Customer> customers)
     Console.WriteLine(" ");
     Console.WriteLine($"Customer {name} created!");
 }
- 
+
 Customer? Login(List<Customer> customers)
 {
     if (customers.Count == 0) { Console.WriteLine("\nNo customers yet."); return null; }
@@ -128,7 +138,7 @@ void BrowseByType(FurnitureComponent root)
     }
     if (!found) Console.WriteLine("No furniture found.");
 }
- 
+
 void BrowseByBrand(FurnitureComponent root)
 {
     Console.Write("Enter brand: ");
@@ -143,7 +153,7 @@ void BrowseByBrand(FurnitureComponent root)
     }
     if (!found) Console.WriteLine("No furniture found.");
 }
- 
+
 void Subscribe(Customer? customer, List<Brand> brands)
 {
     if (customer == null) { Console.WriteLine("Please login first."); return; }
@@ -158,7 +168,7 @@ void Subscribe(Customer? customer, List<Brand> brands)
     }
     else Console.WriteLine("Invalid choice.");
 }
- 
+
 void Unsubscribe(Customer? customer, List<Brand> brands)
 {
     if (customer == null) { Console.WriteLine("Please login first."); return; }
@@ -173,7 +183,7 @@ void Unsubscribe(Customer? customer, List<Brand> brands)
     }
     else Console.WriteLine("Invalid choice.");
 }
- 
+
 void ViewOffers(List<Brand> brands)
 {
     Console.WriteLine("\n--- Brands & Special Offers ---");
@@ -183,10 +193,10 @@ void ViewOffers(List<Brand> brands)
         var offers = b.getOffers();
         if (offers.Count == 0) Console.WriteLine("  No offers.");
         else foreach (var o in offers)
-            Console.WriteLine($"  - {o.getOfferName()}: {o.getDiscount()}% off");
+                Console.WriteLine($"  - {o.getOfferName()}: {o.getDiscount()}% off");
     }
 }
- 
+
 void AddOffer(List<Brand> brands)
 {
     Console.WriteLine("Select brand:");
@@ -342,6 +352,7 @@ double PromptDouble(string hint, double defaultValue)
         Console.WriteLine($"Invalid input. Please enter a non-negative number.");
     }
 }
+
 void EmployeeMenu()
 {
     int employeeChoice = -1;
@@ -511,3 +522,5 @@ void ViewOrderHistory(Customer customer)
 {
 
 }
+=======
+>>>>>>> 1cbddc724ac8f4b2c22eaa0a4205cc40650ca59c
