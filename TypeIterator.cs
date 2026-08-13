@@ -2,10 +2,10 @@
 
 public class TypeIterator : IIterator
 {
-    private List<FurnitureComponent> fc;
+    private IReadOnlyList<FurnitureComponent> fc;
     private string type;
     private int position = 0;
-    public TypeIterator(List<FurnitureComponent> fc, string type)
+    public TypeIterator(IReadOnlyList<FurnitureComponent> fc, string type)
     {
         this.fc = fc;
         this.type = type;

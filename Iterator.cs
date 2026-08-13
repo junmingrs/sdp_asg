@@ -2,14 +2,14 @@
 
 public class Iterator : IIterator
 {
-    private List<FurnitureComponent> fc;
+    private IReadOnlyList<FurnitureComponent> fc;
     private int position = 0;
-    public Iterator(List<FurnitureComponent> fc)
+    public Iterator(IReadOnlyList<FurnitureComponent> fc)
     {
         this.fc = fc;
     }
 
-    public bool hasNext() // NOTE: why did this get called twice
+    public bool hasNext()
     {
         return position < fc.Count;
     }

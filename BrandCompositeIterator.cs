@@ -31,9 +31,9 @@ public class BrandCompositeIterator : IIterator
             return null;
         }
         FurnitureComponent component = (FurnitureComponent)stack.Peek().next();
-        if (component is FurnitureCategory)
+        if (component is FurnitureCategory category)
         {
-            stack.Push(component.createIterator("Brand", brand));
+            stack.Push(new BrandIterator(category.FurnitureComponents, this.brand));
         }
         return component;
     }

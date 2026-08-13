@@ -17,6 +17,11 @@ public abstract class FurnitureComponent
         throw new NotSupportedException();
     }
 
+    public virtual FurnitureComponent? getChild(string childName)
+    {
+        throw new NotSupportedException();
+    }
+
     public virtual void print()
     {
         throw new NotSupportedException();

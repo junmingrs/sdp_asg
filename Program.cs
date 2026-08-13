@@ -6,15 +6,19 @@ IBuilder chairBuilder = new ChairBuilder();
 IBuilder bedBuilder = new BedBuilder();
 
 FurnitureComponent root = new FurnitureCategory("root");
-FurnitureComponent living = new FurnitureCategory("living");
-FurnitureComponent bedroom = new FurnitureCategory("bedroom");
+FurnitureComponent sofas = new FurnitureCategory("Sofa");
+FurnitureComponent beds = new FurnitureCategory("Bed");
+FurnitureComponent tables = new FurnitureCategory("Table");
+FurnitureComponent chairs = new FurnitureCategory("Chair");
 
-living.add(sofaBuilder.setColour("Grey").setMaterial("Fabric").setDimensions(80, 30, 95).setBrand("ICKER").setType("Sofa").setPrice(500).build());
-living.add(tableBuilder.setColour("Brown").setMaterial("Wood").setDimensions(120, 75, 60).setBrand("ICKER").setType("Table").setPrice(300).build());
-bedroom.add(bedBuilder.setColour("White").setMaterial("Wood").setDimensions(200, 120, 50).setBrand("ICKER").setType("Bed").setPrice(800).build());
-bedroom.add(chairBuilder.setColour("Black").setMaterial("Leather").setDimensions(60, 28, 25).setBrand("ICKER").setType("Chair").setPrice(150).build());
-root.add(living);
-root.add(bedroom);
+sofas.add(sofaBuilder.setColour("Grey").setMaterial("Fabric").setDimensions(80, 30, 95).setBrand("ICKER").setType("Sofa").setPrice(500).build());
+tables.add(tableBuilder.setColour("Brown").setMaterial("Wood").setDimensions(120, 75, 60).setBrand("ICKER").setType("Table").setPrice(300).build());
+beds.add(bedBuilder.setColour("White").setMaterial("Wood").setDimensions(200, 120, 50).setBrand("ICKER").setType("Bed").setPrice(800).build());
+chairs.add(chairBuilder.setColour("Black").setMaterial("Leather").setDimensions(60, 28, 25).setBrand("ICKER").setType("Chair").setPrice(150).build());
+root.add(sofas);
+root.add(tables);
+root.add(beds);
+root.add(chairs);
 
 Brand ikea = new Brand("IKEA");
 Brand ashley = new Brand("Ashley");
@@ -22,45 +26,98 @@ List<Brand> brands = new List<Brand> { ikea, ashley };
 List<Customer> customers = new List<Customer>();
 Customer? currentCustomer = null;
 
-// ── MAIN MENU ──────────────────────────────────
-int choice = -1;
-while (choice != 0)
+void mainMenu()
 {
-    Console.WriteLine("\n=============================");
-    Console.WriteLine("   Welcome to ICKIER Store!");
-    Console.WriteLine("=============================");
-    if (currentCustomer != null)
-        Console.WriteLine($"   Logged in as: {currentCustomer.Name}");
-    Console.WriteLine("1) Create new customer");
-    Console.WriteLine("2) Login as customer");
-    Console.WriteLine("3) Browse furniture by type");
-    Console.WriteLine("4) Browse furniture by brand");
-    Console.WriteLine("5) Subscribe to a brand");
-    Console.WriteLine("6) Unsubscribe from a brand");
-    Console.WriteLine("7) View brands & special offers");
-    Console.WriteLine("8) Add new special offer to brand");
-    Console.WriteLine("9) Add add-ons to furniture");
-    Console.WriteLine("10) Add furniture to catalog");
-    Console.WriteLine("0) Exit");
-    Console.Write("Your choice? ");
-
-    if (!int.TryParse(Console.ReadLine(), out choice)) choice = -1;
-
-    switch (choice)
+    int choice = -1;
+    while (choice != 0)
     {
-        case 1: CreateCustomer(customers); break;
-        case 2: currentCustomer = Login(customers); break;
-        case 3: BrowseByType(root); break;
-        case 4: BrowseByBrand(root); break;
-        case 5: Subscribe(currentCustomer, brands); break;
-        case 6: Unsubscribe(currentCustomer, brands); break;
-        case 7: ViewOffers(brands); break;
-        case 8: AddOffer(brands); break;
-        case 9: AddAddOns(root); break;
-        // case 10: AddFurniture(root); break;
-        case 10: iterateEverything(); break;
-        case 0: Console.WriteLine("Thank you for visiting ICKIER!"); break;
-        default: Console.WriteLine("Invalid choice."); break;
+        Console.WriteLine("\n=============================");
+        Console.WriteLine("   Welcome to ICKIER Store!");
+        Console.WriteLine("=============================");
+        if (currentCustomer != null)
+            Console.WriteLine($"   Logged in as: {currentCustomer.Name}");
+        Console.WriteLine("1) Create new customer");
+        Console.WriteLine("2) Login as Customer");
+        Console.WriteLine("3) Login as Employee");
+        Console.WriteLine("0) Exit");
+        Console.Write("Your choice? ");
+
+        if (!int.TryParse(Console.ReadLine(), out choice)) choice = -1;
+
+        switch (choice)
+        {
+            case 1: CreateCustomer(customers); break;
+            case 2: currentCustomer = Login(customers); customerMenu(); break;
+            case 3: employeeMenu(); break;
+            case 0: Console.WriteLine("Thank you for visiting ICKIER!"); break;
+            default: Console.WriteLine("Invalid choice."); break;
+        }
+    }
+}
+
+void customerMenu()
+{
+    int choice = -1;
+    while (choice != 0)
+    {
+        Console.WriteLine("\n=============================");
+        Console.WriteLine("   Welcome to ICKIER Store!");
+        Console.WriteLine("=============================");
+        Console.WriteLine("1) Logout");
+        Console.WriteLine("2) Browse furniture by type");
+        Console.WriteLine("3) Browse furniture by brand");
+        Console.WriteLine("4) Subscribe to a brand");
+        Console.WriteLine("5) Unsubscribe from a brand");
+        Console.WriteLine("6) View brands & special offers");
+        Console.WriteLine("5) Add add-ons to furniture"); // NOTE: this is after order
+        Console.WriteLine("0) Exit");
+        Console.Write("Your choice? ");
+
+        if (!int.TryParse(Console.ReadLine(), out choice)) choice = -1;
+
+        switch (choice)
+        {
+            case 1: break;
+            case 2: BrowseByType(root); break;
+            case 3: BrowseByBrand(root); break;
+            case 4: Subscribe(currentCustomer, brands); break;
+            case 5: Unsubscribe(currentCustomer, brands); break;
+            case 6: ViewOffers(brands); break;
+            case 0: Console.WriteLine("Thank you for visiting ICKIER!"); break;
+            default: Console.WriteLine("Invalid choice."); break;
+        }
+    }
+}
+
+void employeeMenu()
+{
+    int choice = -1;
+    while (choice != 0)
+    {
+        Console.WriteLine("\n=============================");
+        Console.WriteLine("   Welcome to ICKIER Store!");
+        Console.WriteLine("=============================");
+        Console.WriteLine("1) Logout");
+        Console.WriteLine("2) Browse furniture by type");
+        Console.WriteLine("3) Browse furniture by brand");
+        Console.WriteLine("4) Add new special offer to brand");
+        Console.WriteLine("5) Add furniture to catalog");
+        Console.WriteLine("0) Exit");
+        Console.Write("Your choice? ");
+
+        if (!int.TryParse(Console.ReadLine(), out choice)) choice = -1;
+
+        switch (choice)
+        {
+            case 1: mainMenu(); break;
+            case 2: BrowseByType(root); break;
+            case 3: BrowseByBrand(root); break;
+            case 4: AddOffer(brands); break;
+            case 5: AddFurniture(root); break;
+            case 6: iterateEverything(); break;
+            case 0: Console.WriteLine("Thank you for visiting ICKIER!"); break;
+            default: Console.WriteLine("Invalid choice."); break;
+        }
     }
 }
 
@@ -103,8 +160,7 @@ Customer? Login(List<Customer> customers)
 
 void BrowseByType(FurnitureComponent root)
 {
-    Console.Write("Enter type (e.g. Sofa, Table, Bed, Chair): ");
-    string type = Console.ReadLine() ?? "";
+    string type = PromptString("Enter type (e.g. Sofa, Table, Bed, Chair): ", "Sofa");
     Console.WriteLine($"\n--- Furniture of type: {type} ---");
     IIterator it = root.createIterator("Type", type);
     bool found = false;
@@ -255,14 +311,15 @@ void AddFurniture(FurnitureComponent root)
     }
 }
 
-void PromptFurniture(IBuilder builder, string type, FurnitureComponent root)
+void PromptFurniture(IBuilder builder, string category, FurnitureComponent root)
 {
     string brand = PromptString($"Brand (default: ICKER)", "ICKER");
+    string type = PromptString($"Type (default: {category})", category);
     string colour = PromptString($"Colour (default: White)", "White");
-    string materialDefault = type switch
+    string materialDefault = category switch
     {
         "Sofa" => "Fabric",
-        "Bed" => "Spring",
+        "Bed" => "Foam",
         _ => "Wood"
     };
     string material = PromptString($"Material (default: {materialDefault})", materialDefault);
@@ -287,12 +344,26 @@ void PromptFurniture(IBuilder builder, string type, FurnitureComponent root)
         .setPrice(price)
         .build();
 
-    string categoryName = PromptString($"Category to store in (new category will be created)", type);
-    FurnitureCategory category = new FurnitureCategory(categoryName);
-    root.add(category);
-    category.add(furniture);
+    FurnitureComponent? fc = root.getChild(category);
+    if (fc == null)
+    {
+        throw new Exception("This shouldnt be possible");
+    }
+    if (type != category)
+    {
+        FurnitureCategory newCategory = new FurnitureCategory(type);
+        newCategory.add(furniture);
+        fc.add(newCategory);
+        Console.WriteLine($"\n✓ Created new category under '{category}'");
+        Console.WriteLine("this got ran");
+    }
+    else
+    {
+        fc.add(furniture);
+        Console.WriteLine("this also got ran");
+    }
+    Console.WriteLine($"\n✓ Added to category '{type}': {furniture.getDescription()}");
 
-    Console.WriteLine($"\n✓ Added to category '{categoryName}': {furniture.getDescription()}");
 }
 
 string PromptString(string hint, string defaultValue)
@@ -329,3 +400,6 @@ double PromptDouble(string hint, double defaultValue)
         Console.WriteLine($"Invalid input. Please enter a non-negative number.");
     }
 }
+
+mainMenu();
+

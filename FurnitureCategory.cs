@@ -3,6 +3,7 @@
 public class FurnitureCategory : FurnitureComponent
 {
     private List<FurnitureComponent> furnitureComponents;
+    public IReadOnlyList<FurnitureComponent> FurnitureComponents => furnitureComponents;
     private IIterator? typeIter = null;
     private IIterator? brandIter = null;
     private IIterator? iter = null;
@@ -40,6 +41,21 @@ public class FurnitureCategory : FurnitureComponent
             this.iter = new CompositeIterator(new Iterator(this.furnitureComponents));
             return this.iter;
         }
+    }
+    public override FurnitureComponent? getChild(string childName)
+    {
+        foreach (FurnitureComponent fco in this.furnitureComponents)
+        {
+            if (fco is FurnitureCategory)
+            {
+                FurnitureCategory fca = (FurnitureCategory)fco;
+                if (fca.Category == childName)
+                {
+                    return fca;
+                }
+            }
+        }
+        return null;
     }
     public override void print()
     {
