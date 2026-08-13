@@ -18,9 +18,16 @@ root.add(bedroom);
  
 Brand ikea = new Brand("IKEA");
 Brand ashley = new Brand("Ashley");
+Customer Custtest1 = new Customer("Dummy1", "thisisafake@email.com", "ICKCUS0001");
+Customer Custtest2 = new Customer("Dummy2", "lwkymightbeareal@email.com", "ICKCUS0002");
+Employee Emptest1 = new Employee("EmployeeDummy1", "ICKEMP0001");
+Employee Emptest2 = new Employee("EmployeeDummy2", "ICKEMP0002");
 List<Brand> brands = new List<Brand> { ikea, ashley };
-List<Customer> customers = new List<Customer>();
+List<Customer> customers = new List<Customer> { Custtest1, Custtest2 };
+List<Employee> employees = new List<Employee> { Emptest1, Emptest2 };
+List<Order> orders = new List<Order>();
 Customer? currentCustomer = null;
+Employee? currentEmployee = null;
  
 // ── MAIN MENU ──────────────────────────────────
 int choice = -1;
@@ -29,18 +36,10 @@ while (choice != 0)
     Console.WriteLine("\n=============================");
     Console.WriteLine("   Welcome to ICKIER Store!");
     Console.WriteLine("=============================");
-    if (currentCustomer != null)
-        Console.WriteLine($"   Logged in as: {currentCustomer.Name}");
     Console.WriteLine("1) Create new customer");
     Console.WriteLine("2) Login as customer");
-    Console.WriteLine("3) Browse furniture by type");
-    Console.WriteLine("4) Browse furniture by brand");
-    Console.WriteLine("5) Subscribe to a brand");
-    Console.WriteLine("6) Unsubscribe from a brand");
-    Console.WriteLine("7) View brands & special offers");
-    Console.WriteLine("8) Add new special offer to brand");
-    Console.WriteLine("9) Add add-ons to furniture");
-    Console.WriteLine("10) Add furniture to catalog");
+    Console.WriteLine("3) Login as employee");
+    // Console.WriteLine("4) Create new Employee");
     Console.WriteLine("0) Exit");
     Console.Write("Your choice? ");
  
@@ -49,16 +48,10 @@ while (choice != 0)
     switch (choice)
     {
         case 1: CreateCustomer(customers); break;
-        case 2: currentCustomer = Login(customers); break;
-        case 3: BrowseByType(root); break;
-        case 4: BrowseByBrand(root); break;
-        case 5: Subscribe(currentCustomer, brands); break;
-        case 6: Unsubscribe(currentCustomer, brands); break;
-        case 7: ViewOffers(brands); break;
-        case 8: AddOffer(brands); break;
-        case 9: AddAddOns(root); break;
-        case 10: AddFurniture(root); break;
-        case 0: Console.WriteLine("Thank you for visiting ICKIER!"); break;
+        case 2: currentCustomer = Login(customers); if (currentCustomer != null) { CustomerMenu(); }; break;
+        case 3: currentEmployee = EmployeeLogin(employees); if (currentEmployee != null) { EmployeeMenu(); }; break;
+        case 4: CreateEmployee(employees); break;
+        case 0: Console.WriteLine(" "); Console.WriteLine("Thank you for visiting ICKIER!"); break;
         default: Console.WriteLine("Invalid choice."); break;
     }
 }
@@ -67,29 +60,60 @@ while (choice != 0)
  
 void CreateCustomer(List<Customer> customers)
 {
-    Console.Write("Enter name: ");
+    Console.Write("\nEnter name: ");
     string name = Console.ReadLine() ?? "";
     Console.Write("Enter email: ");
     string email = Console.ReadLine() ?? "";
-    customers.Add(new Customer(name, email));
+    string custbaseID = "ICKCUS";
+    string id = custbaseID + (customers.Count() + 1).ToString("0000");
+    customers.Add(new Customer(name, email, id));
+    Console.WriteLine(" ");
     Console.WriteLine($"Customer {name} created!");
 }
  
 Customer? Login(List<Customer> customers)
 {
-    if (customers.Count == 0) { Console.WriteLine("No customers yet."); return null; }
-    Console.WriteLine("Select customer:");
+    if (customers.Count == 0) { Console.WriteLine("\nNo customers yet."); return null; }
+    Console.WriteLine("\nSelect customer:");
     for (int i = 0; i < customers.Count; i++)
         Console.WriteLine($"{i + 1}) {customers[i].Name}");
     Console.Write("Your choice? ");
     if (int.TryParse(Console.ReadLine(), out int idx) && idx >= 1 && idx <= customers.Count)
     {
-        Console.WriteLine($"Logged in as {customers[idx - 1].Name}!");
         return customers[idx - 1];
     }
     Console.WriteLine("Invalid choice."); return null;
 }
- 
+
+void CreateEmployee(List<Employee> employees)
+{
+    Console.Write("\nEnter name: ");
+    string name = Console.ReadLine() ?? "";
+    Console.Write("Enter pasword: ");
+    string password = Console.ReadLine() ?? "";
+    string empbaseID = "ICKEMP";
+    string id = empbaseID + (employees.Count() + 1).ToString("0000");
+    employees.Add(new Employee(name, id, password));
+    Console.WriteLine(" ");
+    Console.WriteLine($"Employee {id} created!");
+}
+
+Employee? EmployeeLogin(List<Employee> employees)
+{
+    if (employees.Count == 0) { Console.WriteLine("\nNo employees yet."); return null; }
+    Console.WriteLine("\nSelect Employee:");
+    for (int i = 0; i < employees.Count; i++)
+        Console.WriteLine($"{i + 1}) {employees[i].Name}");
+    Console.Write("Your choice? ");
+    if (int.TryParse(Console.ReadLine(), out int idx) && idx >= 1 && idx <= employees.Count)
+    {
+        Console.Write("Enter Password: ");
+        string password = Console.ReadLine();
+        return employees[idx - 1].logIn(password);
+    }
+    Console.WriteLine("Invalid choice."); return null;
+}
+
 void BrowseByType(FurnitureComponent root)
 {
     Console.Write("Enter type (e.g. Sofa, Table, Bed, Chair): ");
@@ -317,4 +341,173 @@ double PromptDouble(string hint, double defaultValue)
         if (double.TryParse(input, out double value) && value >= 0) return value;
         Console.WriteLine($"Invalid input. Please enter a non-negative number.");
     }
+}
+void EmployeeMenu()
+{
+    int employeeChoice = -1;
+    while (employeeChoice != 0)
+    {
+        Console.WriteLine("\n=============================");
+        Console.WriteLine("       Employee Console      ");
+        Console.WriteLine("=============================");
+        if (currentEmployee != null)
+            Console.WriteLine($"   Logged in as: {currentEmployee.Name}");
+        Console.WriteLine("1) Browse furniture by type");
+        Console.WriteLine("2) Browse furniture by brand");
+        Console.WriteLine("3) Add furniture to catalog");
+        Console.WriteLine("4) View brands & special offers");
+        Console.WriteLine("5) Add new special offer to brand");
+        Console.WriteLine("6) View Orders to Prepare");
+        Console.WriteLine("7) View Orders to Send");
+        Console.WriteLine("0) Log Out");
+        Console.Write("Your choice? ");
+
+        if (!int.TryParse(Console.ReadLine(), out employeeChoice)) employeeChoice = -1;
+
+        switch (employeeChoice)
+        {
+            case 1: BrowseByType(root); break;
+            case 2: BrowseByBrand(root); break;
+            case 3: AddFurniture(root); break;
+            case 4: ViewOffers(brands); break;
+            case 5: AddOffer(brands); break;
+            case 6: PrepareOrder(); break;
+            case 7: SendOrder(); break;
+            case 0: currentEmployee = null; Console.WriteLine(" "); Console.WriteLine("Logging Out..."); break;
+            default: Console.WriteLine("Invalid choice."); break;
+        }
+    }
+}
+
+void CustomerMenu()
+{
+    int customerchoice = -1;
+    while (customerchoice != 0)
+    {
+        Console.WriteLine("\n=============================");
+        Console.WriteLine($"Welcome Back {currentCustomer.Name}!");
+        Console.WriteLine("=============================");
+        Console.WriteLine("1) Browse furniture by type");
+        Console.WriteLine("2) Browse furniture by brand");
+        Console.WriteLine("3) Subscribe to a brand");
+        Console.WriteLine("4) Unsubscribe from a brand");
+        Console.WriteLine("5) View brands & special offers");
+        Console.WriteLine("6) Create An Order");
+        Console.WriteLine("7) View Current Orders");
+        Console.WriteLine("8) View Order History");
+        Console.WriteLine("0) Log Out");
+        Console.Write("Your choice? ");
+
+        if (!int.TryParse(Console.ReadLine(), out customerchoice)) customerchoice = -1;
+
+        switch (customerchoice)
+        {
+            case 1: BrowseByType(root); break;
+            case 2: BrowseByBrand(root); break;
+            case 3: Subscribe(currentCustomer, brands); break;
+            case 4: Unsubscribe(currentCustomer, brands); break;
+            case 5: ViewOffers(brands); break;
+            case 6: CreateOrder(currentCustomer); break;
+            case 7: ViewCurrentOrders(currentCustomer); break;
+            case 8: ViewOrderHistory(currentCustomer); break;
+            case 0: currentCustomer = null; Console.WriteLine(" "); Console.WriteLine("Logging Out..."); break;
+            default: Console.WriteLine("Invalid choice."); break;
+        }
+    }
+}
+
+void PrepareOrder()
+{
+    Console.WriteLine(" ");
+    Console.WriteLine("--- Orders ---");
+    int i = 1;
+    foreach (Order order in orders)
+    {
+        if (order.State is PreparingState)
+        {
+            Console.WriteLine($"{i.ToString()}. {order.OrderID}");
+        }
+        i += 1;
+    }
+    Console.WriteLine(" ");
+    Console.WriteLine("Enter OrderID to Prepare");
+    Console.Write("Enter 0 to exit: ");
+    string orderOption = Console.ReadLine();
+    if (Convert.ToInt32(orderOption) == 0)
+    {
+        Console.WriteLine(" ");
+        Console.WriteLine("Returning to Employee Console");
+        Console.WriteLine(" ");
+    }
+    Order selectOrder = null;
+    foreach (Order o2 in orders)
+    {
+        if (o2.OrderID == orderOption)
+        {
+            selectOrder = o2;
+        }
+    }
+    selectOrder.IsPrepared = true;
+    Console.WriteLine(" ");
+    Console.WriteLine($"{selectOrder.OrderID} has been Prepared.");
+    Console.WriteLine(" ");
+}
+
+void SendOrder()
+{
+    Console.WriteLine(" ");
+    Console.WriteLine("--- Orders ---");
+    int i = 1;
+    foreach (Order order in orders)
+    {
+        if (order.State is OFDState)
+        {
+            Console.WriteLine($"{i.ToString()}. {order.OrderID}");
+        }
+        i += 1;
+    }
+    Console.WriteLine(" ");
+    Console.WriteLine("Enter OrderID to Send Out");
+    Console.Write("Enter 0 to exit: ");
+    string orderOption = Console.ReadLine();
+    if (Convert.ToInt32(orderOption) == 0)
+    {
+        Console.WriteLine(" ");
+        Console.WriteLine("Returning to Employee Console");
+        Console.WriteLine(" ");
+    }
+    Order selectOrder = null;
+    foreach (Order o2 in orders)
+    {
+        if (o2.OrderID == orderOption)
+        {
+            selectOrder = o2;
+        }
+    }
+    selectOrder.deliver();
+    Console.WriteLine(" ");
+    Console.WriteLine($"{selectOrder.OrderID} has been Sent Out.");
+    Console.WriteLine(" ");
+}
+
+void CreateOrder(Customer customer)
+{
+    Order order = new Order(customer.OrderList.Count());
+    Console.WriteLine(" ");
+    Console.WriteLine("Add Item into Order");
+}
+
+void CancelOrder(Customer customer)
+{
+
+}
+
+void ViewCurrentOrders(Customer customer)
+{
+
+}
+
+void ViewOrderHistory(Customer customer)
+{
+
 }

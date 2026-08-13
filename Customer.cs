@@ -6,7 +6,6 @@ namespace SDP_ASG
     {
         private string name;
         private string email;
-        private string password;
         private string id;
         private Command[] orderHist;
         private List<Order> orderList = new List<Order>();
@@ -31,27 +30,16 @@ namespace SDP_ASG
             name = null;
             email = null;
         }
-        public Customer(string name, string email)
+        public Customer(string name, string email, string id)
         {
             this.name = name;
             this.email = email;
-            this.password = "12345678";
+            this.id = id;
         }
 
         public void update(SpecialOffer offer)
         {
             Console.WriteLine($"  → {name} received: {offer.getBrand().getBrandName()} has a new offer - {offer.getOfferName()} ({offer.getDiscount()}% off)!");
-        }
-        public Boolean logIn(string Password)
-        {
-            if (this.password == Password)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
         }
         public void addOrder(Order order)
         {

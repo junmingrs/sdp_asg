@@ -36,17 +36,20 @@ namespace SDP_ASG
             id = ID;
             password = "12345678";
         }
+        public Employee(string Name, string ID, string password)
+        {
+            name = Name;
+            id = ID;
+            this.password = password;
+        }
 
-        public Boolean logIn(string password)
+        public Employee logIn(string password)
         {
             if (password == this.Password)
             {
-                return true;
+                return this;
             }
-            else
-            {
-                return false;
-            }
+            return null;
         }
     }
 }
