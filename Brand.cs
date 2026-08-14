@@ -12,6 +12,7 @@ public class Brand : Subject
         observers = new List<Observer>();
         offers = new List<SpecialOffer>();
     }
+    public List<Observer> getObservers() { return observers; }
 
     public void registerObserver(Observer o)
     {

@@ -202,7 +202,7 @@ void Subscribe(Customer? customer, List<Brand> brands)
     else Console.WriteLine("Invalid choice.");
 }
 
-void Unsubscribe(Customer? customer, List<Brand> brands)
+void Unsubscribe(Customer customer, List<Brand> brands)
 {
     if (customer == null) { Console.WriteLine("Please login first."); return; }
     Console.WriteLine("Select brand:");
@@ -211,8 +211,14 @@ void Unsubscribe(Customer? customer, List<Brand> brands)
     Console.Write("Your choice? ");
     if (int.TryParse(Console.ReadLine(), out int idx) && idx >= 1 && idx <= brands.Count)
     {
-        brands[idx - 1].removeObserver(customer);
-        Console.WriteLine($"{customer.Name} unsubscribed from {brands[idx - 1].getBrandName()}.");
+        Brand selected = brands[idx - 1];
+        if (!selected.getObservers().Contains(customer))
+        {
+            Console.WriteLine($"{customer.getName()} is not subscribed to {selected.getBrandName()}!");
+            return;
+        }
+        selected.removeObserver(customer);
+        Console.WriteLine($"{customer.getName()} unsubscribed from {selected.getBrandName()}.");
     }
     else Console.WriteLine("Invalid choice.");
 }
