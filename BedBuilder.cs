@@ -8,7 +8,7 @@ public class BedBuilder : IBuilder
     private int depth = 10;
     private string type = "Bed";
     private string colour = "White";
-    private string material = "Spring";
+    private string material = "Foam";
     private double price = 50.0;
 
     public IBuilder Reset()
@@ -19,7 +19,7 @@ public class BedBuilder : IBuilder
         this.depth = 10;
         this.type = "Bed";
         this.colour = "White";
-        this.material = "Spring";
+        this.material = "Foam";
         this.price = 50.0;
         return this;
     }

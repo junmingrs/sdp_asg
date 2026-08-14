@@ -31,9 +31,10 @@ public class TypeCompositeIterator : IIterator
             return null;
         }
         FurnitureComponent component = (FurnitureComponent)stack.Peek().next();
-        if (component is FurnitureCategory)
+        if (component is FurnitureCategory category)
         {
-            stack.Push(component.createIterator("Type", this.type));
+            stack.Push(new TypeIterator(category.FurnitureComponents, this.type));
+
         }
         return component;
     }

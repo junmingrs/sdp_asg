@@ -2,13 +2,13 @@
 
 public class BrandIterator : IIterator
 {
-    private List<FurnitureComponent> fc;
+    private IReadOnlyList<FurnitureComponent> fc;
     private string brand;
     private int position = 0;
 
     public string Brand { get { return brand; } set { brand = value; } }
 
-    public BrandIterator(List<FurnitureComponent> fc, string brand)
+    public BrandIterator(IReadOnlyList<FurnitureComponent> fc, string brand)
     {
         this.fc = fc;
         this.brand = brand;
