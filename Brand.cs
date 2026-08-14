@@ -22,14 +22,14 @@ public class Brand : Subject
     {
         observers.Add(o);
         Customer c = (Customer)o;
-        Console.WriteLine($"{c.Name} subscribed to {brandName}!");
+        Console.WriteLine($"{c.getName()} subscribed to {brandName}!");
     }
 
     public void removeObserver(Observer o)
     {
         observers.Remove(o);
         Customer c = (Customer)o;
-        Console.WriteLine($"{c.Name} unsubscribed from {brandName}.");
+        Console.WriteLine($"{c.getName()} unsubscribed from {brandName}.");
     }
 
     public void notifyObservers()

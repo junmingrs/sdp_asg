@@ -11,10 +11,15 @@ FurnitureComponent beds = new FurnitureCategory("Bed");
 FurnitureComponent tables = new FurnitureCategory("Table");
 FurnitureComponent chairs = new FurnitureCategory("Chair");
 
-sofas.add(sofaBuilder.setColour("Grey").setMaterial("Fabric").setDimensions(80, 30, 95).setBrand("ICKER").setType("Sofa").setPrice(500).build());
-tables.add(tableBuilder.setColour("Brown").setMaterial("Wood").setDimensions(120, 75, 60).setBrand("ICKER").setType("Table").setPrice(300).build());
-beds.add(bedBuilder.setColour("White").setMaterial("Wood").setDimensions(200, 120, 50).setBrand("ICKER").setType("Bed").setPrice(800).build());
-chairs.add(chairBuilder.setColour("Black").setMaterial("Leather").setDimensions(60, 28, 25).setBrand("ICKER").setType("Chair").setPrice(150).build());
+sofas.add(sofaBuilder.setColour("Grey").setMaterial("Fabric").setDimensions(80, 30, 95).setBrand("ICKER").setType("Sofa").setPrice(450).build());
+tables.add(tableBuilder.setColour("Brown").setMaterial("Wood").setDimensions(120, 75, 60).setBrand("ICKER").setType("Table").setPrice(220).build());
+beds.add(bedBuilder.setColour("White").setMaterial("Wood").setDimensions(200, 120, 50).setBrand("ICKER").setType("Bed").setPrice(775).build());
+chairs.add(chairBuilder.setColour("Black").setMaterial("Leather").setDimensions(60, 28, 25).setBrand("ICKER").setType("Chair").setPrice(75).build());
+
+sofas.add(sofaBuilder.setColour("Grey").setMaterial("Leather").setDimensions(120, 30, 105).setBrand("Ashley").setType("Sofa").setPrice(500).build());
+tables.add(tableBuilder.setColour("Brown").setMaterial("Wood").setDimensions(90, 70, 80).setBrand("Ashley").setType("Table").setPrice(300).build());
+beds.add(bedBuilder.setColour("White").setMaterial("Metal").setDimensions(300, 120, 75).setBrand("Ashley").setType("Bed").setPrice(1050).build());
+chairs.add(chairBuilder.setColour("Black").setMaterial("Fabric").setDimensions(80, 30, 30).setBrand("Ashley").setType("Chair").setPrice(90).build());
 root.add(sofas);
 root.add(tables);
 root.add(beds);
@@ -91,13 +96,13 @@ Customer? Login(List<Customer> customers)
     if (customers.Count == 0) { Console.WriteLine("\nNo customers yet."); return null; }
     Console.WriteLine("\nSelect customer:");
     for (int i = 0; i < customers.Count; i++)
-        Console.WriteLine($"{i + 1}) {customers[i].Name}");
+        Console.WriteLine($"{i + 1}) {customers[i].getName()}");
     Console.Write("Your choice? ");
     if (int.TryParse(Console.ReadLine(), out int idx) && idx >= 1 && idx <= customers.Count)
     {
         return customers[idx - 1];
     }
-    Console.WriteLine("Invalid choice."); return null;
+    Console.WriteLine("\nInvalid choice."); return null;
 }
 
 void CreateEmployee(List<Employee> employees)
@@ -122,10 +127,21 @@ Employee? EmployeeLogin(List<Employee> employees)
     Console.Write("Your choice? ");
     if (int.TryParse(Console.ReadLine(), out int idx) && idx >= 1 && idx <= employees.Count)
     {
-        Console.Write("Enter Password: ");
+        Console.Write("Enter Password");
         string password = Console.ReadLine();
-        return employees[idx - 1].logIn(password);
+        Employee e = employees[idx - 1].logIn(password);
+        if (e == null)
+        {
+            Console.WriteLine(" ");
+            Console.WriteLine("Incorrect Password!");
+            return null;
+        } 
+        else
+        {
+            return e;
+        }
     }
+    Console.WriteLine(" ");
     Console.WriteLine("Invalid choice."); return null;
 }
 
@@ -405,13 +421,14 @@ void EmployeeMenu()
         Console.WriteLine("=============================");
         if (currentEmployee != null)
             Console.WriteLine($"   Logged in as: {currentEmployee.Name}");
-        Console.WriteLine("1) Browse furniture by type");
-        Console.WriteLine("2) Browse furniture by brand");
-        Console.WriteLine("3) Add furniture to catalog");
-        Console.WriteLine("4) View brands & special offers");
-        Console.WriteLine("5) Add new special offer to brand");
-        Console.WriteLine("6) View Orders to Prepare");
-        Console.WriteLine("7) View Orders to Send");
+        Console.WriteLine("1) Browse all furniture in catalog");
+        Console.WriteLine("2) Browse furniture by type");
+        Console.WriteLine("3) Browse furniture by brand");
+        Console.WriteLine("4) Add furniture to catalog");
+        Console.WriteLine("5) View brands & special offers");
+        Console.WriteLine("6) Add new special offer to brand");
+        Console.WriteLine("7) View Orders to Prepare");
+        Console.WriteLine("8) View Orders to Send");
         Console.WriteLine("0) Log Out");
         Console.Write("Your choice? ");
 
@@ -419,13 +436,14 @@ void EmployeeMenu()
 
         switch (employeeChoice)
         {
-            case 1: BrowseByType(root); break;
-            case 2: BrowseByBrand(root); break;
-            case 3: AddFurniture(root); break;
-            case 4: ViewOffers(brands); break;
-            case 5: AddOffer(brands); break;
-            case 6: PrepareOrder(); break;
-            case 7: SendOrder(); break;
+            case 1: iterateEverything(); break;
+            case 2: BrowseByType(root); break;
+            case 3: BrowseByBrand(root); break;
+            case 4: AddFurniture(root); break;
+            case 5: ViewOffers(brands); break;
+            case 6: AddOffer(brands); break;
+            case 7: PrepareOrder(); break;
+            case 8: SendOrder(); break;
             case 0: currentEmployee = null; Console.WriteLine(" "); Console.WriteLine("Logging Out..."); break;
             default: Console.WriteLine("Invalid choice."); break;
         }
@@ -438,8 +456,9 @@ void CustomerMenu()
     while (customerchoice != 0)
     {
         Console.WriteLine("\n=============================");
-        Console.WriteLine($"Welcome Back {currentCustomer.Name}!");
+        Console.WriteLine($"Welcome Back {currentCustomer.getName()}!");
         Console.WriteLine("=============================");
+        Console.WriteLine("1) Browse all furniture in catalog");
         Console.WriteLine("1) Browse furniture by type");
         Console.WriteLine("2) Browse furniture by brand");
         Console.WriteLine("3) Subscribe to a brand");
@@ -455,14 +474,15 @@ void CustomerMenu()
 
         switch (customerchoice)
         {
-            case 1: BrowseByType(root); break;
-            case 2: BrowseByBrand(root); break;
-            case 3: Subscribe(currentCustomer, brands); break;
-            case 4: Unsubscribe(currentCustomer, brands); break;
-            case 5: ViewOffers(brands); break;
-            case 6: CreateOrder(currentCustomer); break;
-            case 7: ViewCurrentOrders(currentCustomer); break;
-            case 8: ViewOrderHistory(currentCustomer); break;
+            case 1: iterateEverything(); break;
+            case 2: BrowseByType(root); break;
+            case 3: BrowseByBrand(root); break;
+            case 4: Subscribe(currentCustomer, brands); break;
+            case 5: Unsubscribe(currentCustomer, brands); break;
+            case 6: ViewOffers(brands); break;
+            case 7: CreateOrder(currentCustomer); break;
+            case 8: ViewCurrentOrders(currentCustomer); break;
+            case 9: ViewOrderHistory(currentCustomer); break;
             case 0: currentCustomer = null; Console.WriteLine(" "); Console.WriteLine("Logging Out..."); break;
             default: Console.WriteLine("Invalid choice."); break;
         }

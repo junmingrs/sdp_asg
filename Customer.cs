@@ -9,14 +9,6 @@ namespace SDP_ASG
         private string id;
         private Command[] orderHist;
         private List<Order> orderList = new List<Order>();
-        public string Name
-        {
-            get { return name; }
-        }
-        public string Email
-        {
-            get { return email; }
-        }
         public string Id
         {
             get { return id; }
@@ -37,6 +29,14 @@ namespace SDP_ASG
             this.id = id;
         }
 
+        public string getName()
+        {
+            return name;
+        }
+        public string getEmail()
+        {
+            return email;
+        }
         public void update(SpecialOffer offer)
         {
             Console.WriteLine($"  → {name} received: {offer.getBrand().getBrandName()} has a new offer - {offer.getOfferName()} ({offer.getDiscount()}% off)!");
