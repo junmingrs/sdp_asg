@@ -7,12 +7,16 @@
       "RelativeMoniker": "D:0:0:{803FEEBE-7E3F-E353-6EAA-B0751D1CAB79}|SDP_ASG.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{803FEEBE-7E3F-E353-6EAA-B0751D1CAB79}|SDP_ASG.csproj|c:\\users\\lenovo\\desktop\\np\\year 2\\software design patterns\\sdp asg\\employee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{803FEEBE-7E3F-E353-6EAA-B0751D1CAB79}|SDP_ASG.csproj|solutionrelative:employee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{803FEEBE-7E3F-E353-6EAA-B0751D1CAB79}|SDP_ASG.csproj|c:\\users\\lenovo\\desktop\\np\\year 2\\software design patterns\\sdp asg\\brand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{803FEEBE-7E3F-E353-6EAA-B0751D1CAB79}|SDP_ASG.csproj|solutionrelative:brand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{803FEEBE-7E3F-E353-6EAA-B0751D1CAB79}|SDP_ASG.csproj|c:\\users\\lenovo\\desktop\\np\\year 2\\software design patterns\\sdp asg\\customer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{803FEEBE-7E3F-E353-6EAA-B0751D1CAB79}|SDP_ASG.csproj|solutionrelative:customer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{803FEEBE-7E3F-E353-6EAA-B0751D1CAB79}|SDP_ASG.csproj|c:\\users\\lenovo\\desktop\\np\\year 2\\software design patterns\\sdp asg\\employee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{803FEEBE-7E3F-E353-6EAA-B0751D1CAB79}|SDP_ASG.csproj|solutionrelative:employee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{803FEEBE-7E3F-E353-6EAA-B0751D1CAB79}|SDP_ASG.csproj|c:\\users\\lenovo\\desktop\\np\\year 2\\software design patterns\\sdp asg\\furniture.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -36,7 +40,7 @@
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "C:\\Users\\Lenovo\\Desktop\\Np\\Year 2\\Software Design Patterns\\SDP ASG\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAHMBAAAuAAAAAAAAAA==",
+              "ViewState": "AgIAALAAAAAAAAAAAAAAAKYAAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-07-28T05:47:43.331Z",
               "IsPinned": true,
@@ -44,7 +48,33 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Customer.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Desktop\\Np\\Year 2\\Software Design Patterns\\SDP ASG\\Customer.cs",
+              "RelativeDocumentMoniker": "Customer.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Desktop\\Np\\Year 2\\Software Design Patterns\\SDP ASG\\Customer.cs",
+              "RelativeToolTip": "Customer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAC0AAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-14T05:54:34.608Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "Brand.cs",
+              "DocumentMoniker": "C:\\Users\\Lenovo\\Desktop\\Np\\Year 2\\Software Design Patterns\\SDP ASG\\Brand.cs",
+              "RelativeDocumentMoniker": "Brand.cs",
+              "ToolTip": "C:\\Users\\Lenovo\\Desktop\\Np\\Year 2\\Software Design Patterns\\SDP ASG\\Brand.cs",
+              "RelativeToolTip": "Brand.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-13T06:59:54.622Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "Employee.cs",
               "DocumentMoniker": "C:\\Users\\Lenovo\\Desktop\\Np\\Year 2\\Software Design Patterns\\SDP ASG\\Employee.cs",
               "RelativeDocumentMoniker": "Employee.cs",
@@ -56,7 +86,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "Furniture.cs",
               "DocumentMoniker": "C:\\Users\\Lenovo\\Desktop\\Np\\Year 2\\Software Design Patterns\\SDP ASG\\Furniture.cs",
               "RelativeDocumentMoniker": "Furniture.cs",
@@ -65,18 +95,6 @@
               "ViewState": "AgIAABkAAAAAAAAAAADwvyYAAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-08-11T02:38:53.093Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Customer.cs",
-              "DocumentMoniker": "C:\\Users\\Lenovo\\Desktop\\Np\\Year 2\\Software Design Patterns\\SDP ASG\\Customer.cs",
-              "RelativeDocumentMoniker": "Customer.cs",
-              "ToolTip": "C:\\Users\\Lenovo\\Desktop\\Np\\Year 2\\Software Design Patterns\\SDP ASG\\Customer.cs",
-              "RelativeToolTip": "Customer.cs",
-              "ViewState": "AgIAACMAAAAAAAAAAAAswCoAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-11T02:33:23.203Z"
             }
           ]
         }

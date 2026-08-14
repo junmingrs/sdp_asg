@@ -31,35 +31,9 @@ List<Customer> customers = new List<Customer> { Custtest1, Custtest2 };
 List<Employee> employees = new List<Employee> { Emptest1, Emptest2 };
 List<Order> orders = new List<Order>();
 Customer? currentCustomer = null;
-<<<<<<< HEAD
 Employee? currentEmployee = null;
  
 // ── MAIN MENU ──────────────────────────────────
-int choice = -1;
-while (choice != 0)
-{
-    Console.WriteLine("\n=============================");
-    Console.WriteLine("   Welcome to ICKIER Store!");
-    Console.WriteLine("=============================");
-    Console.WriteLine("1) Create new customer");
-    Console.WriteLine("2) Login as customer");
-    Console.WriteLine("3) Login as employee");
-    // Console.WriteLine("4) Create new Employee");
-    Console.WriteLine("0) Exit");
-    Console.Write("Your choice? ");
-
-    if (!int.TryParse(Console.ReadLine(), out choice)) choice = -1;
-
-    switch (choice)
-    {
-        case 1: CreateCustomer(customers); break;
-        case 2: currentCustomer = Login(customers); if (currentCustomer != null) { CustomerMenu(); }; break;
-        case 3: currentEmployee = EmployeeLogin(employees); if (currentEmployee != null) { EmployeeMenu(); }; break;
-        case 4: CreateEmployee(employees); break;
-        case 0: Console.WriteLine(" "); Console.WriteLine("Thank you for visiting ICKIER!"); break;
-        default: Console.WriteLine("Invalid choice."); break;
-=======
-
 void mainMenu()
 {
     int choice = -1;
@@ -68,11 +42,10 @@ void mainMenu()
         Console.WriteLine("\n=============================");
         Console.WriteLine("   Welcome to ICKIER Store!");
         Console.WriteLine("=============================");
-        if (currentCustomer != null)
-            Console.WriteLine($"   Logged in as: {currentCustomer.Name}");
         Console.WriteLine("1) Create new customer");
-        Console.WriteLine("2) Login as Customer");
-        Console.WriteLine("3) Login as Employee");
+        Console.WriteLine("2) Login as customer");
+        Console.WriteLine("3) Login as employee");
+        // Console.WriteLine("4) Create new Employee");
         Console.WriteLine("0) Exit");
         Console.Write("Your choice? ");
 
@@ -81,75 +54,10 @@ void mainMenu()
         switch (choice)
         {
             case 1: CreateCustomer(customers); break;
-            case 2: currentCustomer = Login(customers); customerMenu(); break;
-            case 3: employeeMenu(); break;
-            case 0: Console.WriteLine("Thank you for visiting ICKIER!"); break;
-            default: Console.WriteLine("Invalid choice."); break;
-        }
-    }
-}
-
-void customerMenu()
-{
-    int choice = -1;
-    while (choice != 0)
-    {
-        Console.WriteLine("\n=============================");
-        Console.WriteLine("   Welcome to ICKIER Store!");
-        Console.WriteLine("=============================");
-        Console.WriteLine("1) Logout");
-        Console.WriteLine("2) Browse furniture by type");
-        Console.WriteLine("3) Browse furniture by brand");
-        Console.WriteLine("4) Subscribe to a brand");
-        Console.WriteLine("5) Unsubscribe from a brand");
-        Console.WriteLine("6) View brands & special offers");
-        Console.WriteLine("5) Add add-ons to furniture"); // NOTE: this is after order
-        Console.WriteLine("0) Exit");
-        Console.Write("Your choice? ");
-
-        if (!int.TryParse(Console.ReadLine(), out choice)) choice = -1;
-
-        switch (choice)
-        {
-            case 1: break;
-            case 2: BrowseByType(root); break;
-            case 3: BrowseByBrand(root); break;
-            case 4: Subscribe(currentCustomer, brands); break;
-            case 5: Unsubscribe(currentCustomer, brands); break;
-            case 6: ViewOffers(brands); break;
-            case 0: Console.WriteLine("Thank you for visiting ICKIER!"); break;
-            default: Console.WriteLine("Invalid choice."); break;
-        }
-    }
-}
-
-void employeeMenu()
-{
-    int choice = -1;
-    while (choice != 0)
-    {
-        Console.WriteLine("\n=============================");
-        Console.WriteLine("   Welcome to ICKIER Store!");
-        Console.WriteLine("=============================");
-        Console.WriteLine("1) Logout");
-        Console.WriteLine("2) Browse furniture by type");
-        Console.WriteLine("3) Browse furniture by brand");
-        Console.WriteLine("4) Add new special offer to brand");
-        Console.WriteLine("5) Add furniture to catalog");
-        Console.WriteLine("0) Exit");
-        Console.Write("Your choice? ");
-
-        if (!int.TryParse(Console.ReadLine(), out choice)) choice = -1;
-
-        switch (choice)
-        {
-            case 1: mainMenu(); break;
-            case 2: BrowseByType(root); break;
-            case 3: BrowseByBrand(root); break;
-            case 4: AddOffer(brands); break;
-            case 5: AddFurniture(root); break;
-            case 6: iterateEverything(); break;
-            case 0: Console.WriteLine("Thank you for visiting ICKIER!"); break;
+            case 2: currentCustomer = Login(customers); if (currentCustomer != null) { CustomerMenu(); }; break;
+            case 3: currentEmployee = EmployeeLogin(employees); if (currentEmployee != null) { EmployeeMenu(); }; break;
+            case 4: CreateEmployee(employees); break;
+            case 0: Console.WriteLine(" "); Console.WriteLine("Thank you for visiting ICKIER!"); break;
             default: Console.WriteLine("Invalid choice."); break;
         }
     }
@@ -250,7 +158,7 @@ void BrowseByBrand(FurnitureComponent root)
     if (!found) Console.WriteLine("No furniture found.");
 }
 
-void Subscribe(Customer? customer, List<Brand> brands)
+void Subscribe(Customer? customer, List<Brand> brands) // Added Whitespace... idk i jst like em
 {
     if (customer == null) { Console.WriteLine("Please login first."); return; }
     Console.WriteLine("Select brand:");
@@ -259,25 +167,48 @@ void Subscribe(Customer? customer, List<Brand> brands)
     Console.Write("Your choice? ");
     if (int.TryParse(Console.ReadLine(), out int idx) && idx >= 1 && idx <= brands.Count)
     {
+        Console.WriteLine(" ");
         brands[idx - 1].registerObserver(customer);
-        Console.WriteLine($"{customer.Name} subscribed to {brands[idx - 1].getBrandName()}!");
     }
-    else Console.WriteLine("Invalid choice.");
+    else { Console.WriteLine(" "); Console.WriteLine("Invalid choice."); };
 }
 
-void Unsubscribe(Customer? customer, List<Brand> brands)
+void Unsubscribe(Customer? customer, List<Brand> brands) // Changed to only display brands customer is subscribed to + Added Whitespace
 {
+    Console.WriteLine(" ");
     if (customer == null) { Console.WriteLine("Please login first."); return; }
-    Console.WriteLine("Select brand:");
-    for (int i = 0; i < brands.Count; i++)
-        Console.WriteLine($"{i + 1}) {brands[i].getBrandName()}");
-    Console.Write("Your choice? ");
-    if (int.TryParse(Console.ReadLine(), out int idx) && idx >= 1 && idx <= brands.Count)
+    List<Brand> subscribedBrands = new List<Brand>();
+    foreach (Brand b in brands)
     {
-        brands[idx - 1].removeObserver(customer);
-        Console.WriteLine($"{customer.Name} unsubscribed from {brands[idx - 1].getBrandName()}.");
+        foreach (Customer c in b.Observers)
+        {
+            if (c.Id == customer.Id)
+            {
+                subscribedBrands.Add(b);
+            }
+        }
     }
-    else Console.WriteLine("Invalid choice.");
+    if (subscribedBrands.Count() == 0)
+    {
+        Console.WriteLine("You are not subscribed to any Brands yet.");
+    } 
+    else
+    {
+        int i = 1;
+        Console.WriteLine("Select brand:");
+        foreach (Brand b in subscribedBrands)
+        {
+            Console.WriteLine($"{i}) {b.getBrandName()}");
+            i++;
+        }
+        Console.Write("Your choice? ");
+        if (int.TryParse(Console.ReadLine(), out int idx) && idx >= 1 && idx <= brands.Count)
+        {
+            Console.WriteLine(" ");
+            subscribedBrands[idx - 1].removeObserver(customer);
+        }
+        else { Console.WriteLine(" "); Console.WriteLine("Invalid choice."); }
+    }
 }
 
 void ViewOffers(List<Brand> brands)
@@ -464,7 +395,6 @@ double PromptDouble(string hint, double defaultValue)
     }
 }
 
-<<<<<<< HEAD
 void EmployeeMenu()
 {
     int employeeChoice = -1;
