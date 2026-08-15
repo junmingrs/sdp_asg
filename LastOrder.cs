@@ -7,7 +7,7 @@ namespace SDP_ASG
     public class LastOrder : ICommand
     {
         private Order newOrder;
-
+        
         public LastOrder(Order order, int id)
         {
             newOrder = new Order(id);
@@ -18,11 +18,13 @@ namespace SDP_ASG
             newOrder.editDeliveryTime(order.DeliveryTime);
             newOrder.editDeliveryAddress(order.DeliveryAddress);
         }
-
+        
         public void purchase()
         {
+            /*
             newOrder.submit();
             newOrder.processPayment();
+            */
         }
     }
 }

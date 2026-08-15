@@ -335,8 +335,9 @@ void AddOffer(List<Brand> brands)
     else Console.WriteLine("Invalid choice.");
 }
 
-void AddAddOns(FurnitureComponent root)
+void AddAddOns(FurnitureComponent root) // Has been removed take note
 {
+    /*
     Console.Write("Enter furniture type (e.g. Sofa): ");
     string type = Console.ReadLine() ?? "";
     IIterator it = root.createIterator("Type", type);
@@ -366,6 +367,7 @@ void AddAddOns(FurnitureComponent root)
     }
 
     Console.WriteLine($"\n✓ Final: {furniture.getDescription()} - ${furniture.getPrice():F2}");
+    */
 }
 
 void AddFurniture(FurnitureComponent root)
@@ -563,13 +565,14 @@ void SendOrder()
 void CreateOrder(Customer customer)
 {
     Order order = null;
-    if (customer.OrderList.Count() != 0 && customer.OrderList[-1].State is CreatedState)
+    if (customer.OrderList.Count() != 0 && customer.OrderList[^1].State is CreatedState)
     {
-        order = customer.OrderList[-1];
+        order = customer.OrderList[^1];
     } 
     else
     {
         order = new Order(customer.OrderList.Count());
+        customer.addOrder(order);
     }
     int orderchoice = -1;
     while (orderchoice != 0)
@@ -594,8 +597,9 @@ void CreateOrder(Customer customer)
         Console.WriteLine(" ");
         Console.WriteLine("1) View Item Details");
         Console.WriteLine("2) Add Item into Order");
-        Console.WriteLine("3) Edit Order");
-        Console.WriteLine("4) Checkout Order");
+        Console.WriteLine("3) Remove Item from Order");
+        Console.WriteLine("4) View Current Order");
+        Console.WriteLine("5) Checkout Order");
         Console.WriteLine("0) Exit");
         Console.Write("Your choice? ");
 
@@ -605,8 +609,9 @@ void CreateOrder(Customer customer)
         {
             case 1: ViewItemDetail(furnitures); break;
             case 2: AddItemIntoOrder(furnitures, order); break;
-            case 3: EditOrder(order); break;
-            case 4: if (CheckoutOrder(order)) { orderchoice = 0; Console.WriteLine("\nReturning to Menu"); }; break;
+            case 3: RemoveItemFromOrder(order); break;
+            case 4: ViewOrder(order); break;
+            case 5: if (CheckoutOrder(order)) { orderchoice = 0; Console.WriteLine("\nReturning to Menu"); }; break;
             case 0: Console.WriteLine(" "); Console.WriteLine("Exiting Item Catalog"); break;
             default: Console.WriteLine(" "); Console.WriteLine("Invalid choice."); break;
         }
@@ -635,6 +640,19 @@ void AddItemIntoOrder(List<Furniture> furnitures, Order order)
     {
         Furniture f = furnitures[idx - 1];
         OrderItem oi = new OrderItem(f);
+        Console.WriteLine($"\nSelected: {oi.getDescription()} - ${oi.getPrice():F2}");
+        Console.Write("Add warranty? (1 = 1 year, 2 = 2 years, 0 = no): ");
+        string w = Console.ReadLine() ?? "0";
+        if (w == "1") oi = new WarrantyDecorator(oi, 1);
+        else if (w == "2") oi = new WarrantyDecorator(oi, 2);
+        Console.Write("Add installation? (y/n): ");
+        if ((Console.ReadLine() ?? "").ToLower() == "y")
+        {
+            Console.Write("Enter date (e.g. 2026-09-01): ");
+            string date = Console.ReadLine() ?? "";
+            oi = new InstallationDecorator(oi, date);
+        }
+        Console.WriteLine(" ");
         order.addItem(oi);   
     }
     else
@@ -642,85 +660,133 @@ void AddItemIntoOrder(List<Furniture> furnitures, Order order)
         Console.WriteLine("\nInvalid choice.");
     }
 }
-void EditOrder(Order order)
+void RemoveItemFromOrder(Order order) // Need to redo Display
 {
-    int orderchoice2 = -1;
-    while (orderchoice2 != 0)
-    {
-        Console.WriteLine("\nEdit Order");
-        int i = 1;
-        if (order.OrderItems.Count() == 0)
-        {
-            Console.WriteLine("Order is empty - Add an Item first");
-            orderchoice2 = 0;
-        }
-        else
-        {
-            foreach (OrderItem f in order.OrderItems)
-            {
-                string[] details = [f.Type, f.Brand, f.Colour, f.getPrice().ToString("0.00")];
-                Console.WriteLine($"{i}) {details[0]}: {details[1]}, {details[2]} - ${details[3]}");
-                i++;
-            }
-            Console.WriteLine(" ");
-            Console.WriteLine("1) Remove Item");
-            Console.WriteLine("2) Add AddOn");
-            Console.WriteLine("3) Remove AddOn");
-            Console.WriteLine("0) Exit");
-            Console.Write("Your Choice? ");
-
-            if (!int.TryParse(Console.ReadLine(), out orderchoice2)) orderchoice2 = -1;
-        } 
-
-        switch(orderchoice2)
-        {
-            case 1: RemoveItemIntoOrder(order); break;
-            case 2: AddAddOn(order); break;
-            case 3: RemoveAddOn(order); break;
-            case 0: Console.WriteLine("\nReturning to Item Catalog"); break;
-        }
-    }
-}
-void RemoveItemIntoOrder(Order order)
-{
-    Console.Write("\nSelect Item to Remove: ");
-    if (int.TryParse(Console.ReadLine(), out int idx) && idx >= 1 && idx <= order.OrderItems.Count())
-    {
-        order.removeItem(order.OrderItems[idx - 1]);
-    }
-    else
-    {
-        Console.WriteLine("\nInvalid choice.");
-    }
-}
-void AddAddOn(Order order)
-{
-
-}
-void RemoveAddOn(Order order)
-{
-
-}
-Boolean CheckoutOrder(Order order)
-{
-    Console.WriteLine("\nOrder");
     int i = 1;
+    Console.WriteLine("\n------------------------------");
+    Console.WriteLine($"          Your Order          ");
+    Console.WriteLine("------------------------------");
     if (order.OrderItems.Count() == 0)
     {
-        Console.WriteLine("Order is empty!");
-        return false;
+        Console.WriteLine("Order is empty - Add an Item first");
     }
     else
     {
         foreach (OrderItem f in order.OrderItems)
         {
-            string[] details = [f.Type, f.Brand, f.Colour, f.getPrice().ToString("0.00")];
-            Console.WriteLine($"{i}) {details[0]}: {details[1]}, {details[2]} - ${details[3]}");
-            i++;
+            string[] details = f.getDescription().Split(",");
+            if (details.Count() == 5)
+            {
+                string type = details[0].Split(":")[0];
+                string brand = details[0].Split(":")[1].Replace(" ", "");
+                string colour = details[1].Replace(" ", "");
+                string warranty = details[3];
+                string installation = details[^1];
+                Console.WriteLine($"{i}) {type}: {brand}, {colour}" +
+                    $"\n -{warranty},{installation} - ${f.getPrice().ToString("0.00")}");
+                i++;
+            }
+            else if (details.Count() == 4)
+            {
+                string type = details[0].Split(":")[0];
+                string brand = details[0].Split(":")[1].Replace(" ", "");
+                string colour = details[1].Replace(" ", "");
+                string addon = details[^1];
+                Console.WriteLine($"{i}) {type}: {brand}, {colour}" +
+                    $"\n -{addon} - ${f.getPrice().ToString("0.00")}");
+                i++;
+            }
+            else
+            {
+                string type = details[0].Split(":")[0];
+                string brand = details[0].Split(":")[1].Replace(" ", "");
+                string colour = details[1].Replace(" ", "");
+                Console.WriteLine($"{i}) {type}: {brand}, {colour} - ${f.getPrice().ToString("0.00")}");
+                i++;
+            }
         }
+        Console.Write("\nSelect Item to Remove: ");
+        if (int.TryParse(Console.ReadLine(), out int idx) && idx >= 1 && idx <= order.OrderItems.Count())
+        {
+            order.removeItem(order.OrderItems[idx - 1]);
+        }
+        else
+        {
+            Console.WriteLine("\nInvalid choice.");
+        }
+    }
+}
+void ViewOrder(Order order)
+{
+    Console.WriteLine("\n------------------------------");
+    Console.WriteLine($"          Your Order          ");
+    Console.WriteLine("------------------------------");
+    if (order.OrderItems.Count() == 0)
+    {
+        Console.WriteLine("Order is empty - Add an Item first");
+    }
+    else
+    {
+        foreach (OrderItem f in order.OrderItems)
+        {
+            string[] details = f.getDescription().Split(",");
+            if (details.Count() == 5)
+            {
+                string type = details[0].Split(":")[0];
+                string brand = details[0].Split(":")[1].Replace(" ", "");
+                string colour = details[1].Replace(" ", "");
+                string warranty = details[3];
+                string installation = details[^1];
+                Console.WriteLine($"{type}: {brand}, {colour}" +
+                    $"\n -{warranty},{installation} - ${f.getPrice().ToString("0.00")}");
+            }
+            else if (details.Count() == 4)
+            {
+                string type = details[0].Split(":")[0];
+                string brand = details[0].Split(":")[1].Replace(" ", "");
+                string colour = details[1].Replace(" ", "");
+                string addon = details[^1];
+                Console.WriteLine($"{type}: {brand}, {colour}" +
+                    $"\n -{addon} - ${f.getPrice().ToString("0.00")}");
+            }
+            else
+            {
+                string type = details[0].Split(":")[0];
+                string brand = details[0].Split(":")[1].Replace(" ", "");
+                string colour = details[1].Replace(" ", "");
+                Console.WriteLine($"{type}: {brand}, {colour} - ${f.getPrice().ToString("0.00")}");
+            }
+        }
+    }
+}
+Boolean CheckoutOrder(Order order)
+{
+    ViewOrder(order);
+    if (order.OrderItems.Count() == 0)
+    {
+        return false;
+    }
+    else
+    {
         Console.WriteLine(" ");
         Console.Write("Submit Order? (y/n): ");
-        return true;
+        string choice = Console.ReadLine().ToLower();
+        if (choice == "y")
+        {
+            order.requestPayment();
+            order.processPayment();
+            return true;
+        }
+        else if (choice == "n")
+        {
+            Console.WriteLine("\nReturning Back To Item Catalog");
+            return false;
+        }
+        else
+        {
+            Console.WriteLine("\nInvalid choice.");
+            return false;
+        }
     }
 }
 void CancelOrder(Customer customer)

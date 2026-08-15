@@ -23,22 +23,32 @@ namespace SDP_ASG
             Console.WriteLine(" ");
             Console.WriteLine("Order is Archived!");
         }
-        public void submit()
+        public string requestPayment()
         {
             Console.WriteLine(" ");
             Console.WriteLine("Order is Archived!");
+            return order.PaymentType;
         }
-        public void processPayment()
+        public Boolean processPayment()
         {
             Console.WriteLine(" ");
             Console.WriteLine("Order is Archived!");
+            return true;
+        }
+        public void prepare()
+        {
+            Console.WriteLine("\nOrder is Archived");
         }
         public void deliver()
         {
             Console.WriteLine(" ");
             Console.WriteLine("Order is Archived!");
         }
-        public void archive()
+        public void markDelivered()
+        {
+            Console.WriteLine("\nOrder is Archived");
+        }
+        public void archive(Boolean cancelled)
         {
             Console.WriteLine(" ");
             Console.WriteLine("Order is Archived!");

@@ -49,9 +49,10 @@ namespace SDP_ASG
         {
             orderList.Remove(order);
         }
+        /*
         public void purhaseOrder(int slot)
         {
-            orderList[slot].submit();
+            orderList[slot].requestPayment();
             orderList[slot].processPayment();
         }
         public void cancelOrder(int slot)
@@ -66,5 +67,6 @@ namespace SDP_ASG
         {
             orderHist[slot].purchase();
         }
+        */
     }
 }

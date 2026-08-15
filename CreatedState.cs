@@ -16,12 +16,12 @@ namespace SDP_ASG
         public void addItem(OrderItem item)
         {
             order.OrderItems.Add(item);
-            Console.WriteLine($"Added Item - {item.getDescription()}");
+            Console.WriteLine($"Added Item - {item.getDescription()} - ${item.getPrice().ToString("0.00")}");
         }
         public void removeItem(OrderItem item)
         {            
             order.OrderItems.Remove(item);
-            Console.WriteLine($"Removed Item - {item.getDescription()}");
+            Console.WriteLine($"Removed Item - {item.getDescription()} - ${item.getPrice().ToString("0.00")}");
         }
         public string requestPayment()
         {
