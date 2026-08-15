@@ -7,7 +7,7 @@ namespace SDP_ASG
         private string name;
         private string email;
         private string id;
-        private Command[] orderHist;
+        private ICommand[] orderHist;
         private List<Order> orderList = new List<Order>();
         public string Id
         {

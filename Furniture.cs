@@ -33,7 +33,7 @@ public abstract class Furniture : FurnitureComponent
 
     public virtual string getDescription()
     {
-        return $"Furniture: {this.brand}, {this.type}, {this.colour}, {this.material} of {this.height}cm x{this.width}cm x{this.depth}cm, costing ${price}";
+        return $"{this.type}: {this.brand}, {this.colour}, {this.material} of {this.height}cm x{this.width}cm x{this.depth}cm, costing ${price}";
     }
 
     public virtual double getPrice()

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SDP_ASG
 {
-    public class LastOrder : Command
+    public class LastOrder : ICommand
     {
         private Order newOrder;
 

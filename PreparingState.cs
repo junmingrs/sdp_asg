@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SDP_ASG
 {
-    public class PreparingState : OrderState
+    public class PreparingState : IOrderState
     {
         private Order order;
 
@@ -23,33 +23,45 @@ namespace SDP_ASG
             Console.WriteLine(" ");
             Console.WriteLine("Order is already Preparing!");
         }
-        public void submit()
+        public string requestPayment()
         {
             Console.WriteLine(" ");
             Console.WriteLine("Order is already Preparing!");
+            return order.PaymentType;
         }
-        public void processPayment()
+        public Boolean processPayment()
         {
             Console.WriteLine(" ");
             Console.WriteLine("Order is already Preparing!");
+            return true;
+        }
+        public void prepare()
+        {
+            order.setState(order.Prepared);
+            Console.WriteLine($"Order {order.OrderID} is Prepared");
         }
         public void deliver()
         {
-            if (order.IsPrepared)
-            {
-                order.setState(order.OFD);
-            } else
-            {
-                Console.WriteLine(" ");
-                Console.WriteLine("Order is not Prepared yet!");
-            }
+            Console.WriteLine("\nOrder is not Prepared");
         }
-        public void archive()
+        public void markDelivered()
         {
-            order.refund();
-            order.setState(order.Archived);
-            Console.WriteLine(" ");
-            Console.WriteLine("Order Cancelled.");
+            Console.WriteLine("\nOrder is not out for delivery yet");
+        }
+        public void archive(Boolean cancelled)
+        {
+            if (cancelled)
+            {
+                order.IsCancelled = cancelled;
+                order.setState(order.Archived);
+                Console.WriteLine(" ");
+                Console.WriteLine("Order Cancelled.");
+                order.refund();
+            }
+            else
+            {
+                Console.WriteLine("\nOrder Archived");
+            }
         }
     }
 }

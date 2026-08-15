@@ -4,11 +4,11 @@ using System.Text;
 
 namespace SDP_ASG
 {
-    public class DeliveredState : IOrderState
+    public class PreparedState : IOrderState
     {
         private Order order;
 
-        public DeliveredState(Order order)
+        public PreparedState(Order order)
         {
             this.order = order;
         }
@@ -16,37 +16,38 @@ namespace SDP_ASG
         public void addItem(OrderItem item)
         {
             Console.WriteLine(" ");
-            Console.WriteLine("Order is already Delivered!");
+            Console.WriteLine("Order is already Prepared!");
         }
         public void removeItem(OrderItem item)
         {
             Console.WriteLine(" ");
-            Console.WriteLine("Order is already Delivered!");
+            Console.WriteLine("Order is already Prepared!");
         }
         public string requestPayment()
         {
             Console.WriteLine(" ");
-            Console.WriteLine("Order is already Delivered!");
+            Console.WriteLine("Order is already Prepared!");
             return order.PaymentType;
         }
         public Boolean processPayment()
         {
             Console.WriteLine(" ");
-            Console.WriteLine("Order is already Delivered!");
+            Console.WriteLine("Order is already Prepared!");
             return true;
         }
         public void prepare()
         {
-            Console.WriteLine("\nOrder is already Delivered");
+            Console.WriteLine("\nOrder is already Prepared");
         }
         public void deliver()
         {
             Console.WriteLine(" ");
-            Console.WriteLine("Order is already Delivered!");
+            Console.WriteLine($"Order {order.OrderID} sent out for delivery");
+            order.setState(order.OFD);
         }
         public void markDelivered()
         {
-            Console.WriteLine("\nOrder is already delivered");
+            Console.WriteLine("\nOrder is not out for delivery yet");
         }
         public void archive(Boolean cancelled)
         {
@@ -56,10 +57,11 @@ namespace SDP_ASG
                 order.setState(order.Archived);
                 Console.WriteLine(" ");
                 Console.WriteLine("Order Cancelled.");
+                order.refund();
             }
             else
             {
-                Console.WriteLine("Order Archived");
+                Console.WriteLine("\nOrder Archived");
             }
         }
     }

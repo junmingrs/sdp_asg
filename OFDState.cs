@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SDP_ASG
 {
-    public class OFDState : OrderState
+    public class OFDState : IOrderState
     {
         private Order order;
 
@@ -23,26 +23,41 @@ namespace SDP_ASG
             Console.WriteLine(" ");
             Console.WriteLine("Order is already Out for Delivery!");
         }
-        public void submit()
+        public string requestPayment()
         {
             Console.WriteLine(" ");
             Console.WriteLine("Order is already Out for Delivery!");
+            return order.PaymentType;
         }
-        public void processPayment()
+        public Boolean processPayment()
         {
             Console.WriteLine(" ");
             Console.WriteLine("Order is already Out for Delivery!");
+            return true;
+        }
+        public void prepare()
+        {
+            Console.WriteLine("\nOrder is already out for delivery");
         }
         public void deliver()
         {
             Console.WriteLine(" ");
             Console.WriteLine("Order is already Out for Delivery!");
         }
-        public void archive()
+        public void markDelivered()
         {
-            order.setState(order.Archived);
-            Console.WriteLine(" ");
-            Console.WriteLine("Cancelled Order Succesfully");
+            Console.WriteLine("\nOrder is marked as delivered");
+            order.setState(order.Delivered);
+        }
+        public void archive(Boolean cancelled)
+        {
+            if (cancelled)
+            {
+                order.IsCancelled = cancelled;
+                order.setState(order.Archived);
+                Console.WriteLine(" ");
+                Console.WriteLine("Cancelled Order Succesfully");
+            }
         }
     }
 }

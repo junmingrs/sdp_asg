@@ -6,17 +6,18 @@ namespace SDP_ASG
 {
     public class Order
     {
-        private OrderState created;
-        private OrderState submitted;
-        private OrderState preparing;
-        private OrderState oFD;
-        private OrderState delivered;
-        private OrderState archived;
-        private OrderState state;
+        private IOrderState created;
+        private IOrderState submitted;
+        private IOrderState preparing;
+        private IOrderState prepared;
+        private IOrderState oFD;
+        private IOrderState delivered;
+        private IOrderState archived;
+        private IOrderState state;
 
         private string orderID;
-        private Boolean isPrepared;
         private Boolean isCancelled;
+        private Boolean paymentSuccessful;
         private double price;
         private string paymentType;
         private DateTime deliveryTime;
@@ -26,6 +27,11 @@ namespace SDP_ASG
         public string OrderID
         {
             get {  return orderID; }
+        }
+        public Boolean IsCancelled
+        {
+            get { return isCancelled;}
+            set { isCancelled = value; }
         }
         public double Price
         {
@@ -47,41 +53,35 @@ namespace SDP_ASG
         {
             get { return orderItems; }
         }
-        public Boolean IsPrepared
-        {
-            get { return isPrepared; }
-            set { isPrepared = value; }
-        }
-        public Boolean IsCancelled
-        {
-            get { return isCancelled; }
-            set { IsCancelled = value; }
-        }
-        public OrderState Created
+        public IOrderState Created
         {
             get { return created; }
         }
-        public OrderState Submitted
+        public IOrderState Submitted
         {
             get { return submitted; }
         }
-        public OrderState Preparing
+        public IOrderState Preparing
         {
             get { return preparing; }
         }
-        public OrderState OFD
+        public IOrderState Prepared
+        {
+            get { return prepared; }
+        }
+        public IOrderState OFD
         {
             get { return oFD; }
         }
-        public OrderState Delivered
+        public IOrderState Delivered
         {
             get { return delivered; }
         }
-        public OrderState Archived
+        public IOrderState Archived
         {
             get { return archived; }
         }
-        public OrderState State
+        public IOrderState State
         {
             get { return state; }
         }
@@ -91,16 +91,17 @@ namespace SDP_ASG
             created = new CreatedState(this);
             submitted = new SubmittedState(this);
             preparing = new PreparingState(this);
+            prepared = new PreparedState(this);
             oFD = new OFDState(this);
             delivered = new DeliveredState(this);
             archived = new ArchivedState(this);
 
             state = created;
             string orderIDBase = "ORD";
-            orderID = orderIDBase += (id += 1).ToString();
+            orderID = orderIDBase += (id += 1).ToString("0000");
         }
 
-        public double getPrice()
+        public double calculatePrice()
         {
             foreach(OrderItem item in orderItems)
             {
@@ -121,32 +122,7 @@ namespace SDP_ASG
         {
             deliveryAddress = address;
         }
-        public void selectPaymentType()
-        {
-            Console.WriteLine(" ");
-            Console.WriteLine("Please Select Payment Type");
-            Console.WriteLine("1. Credit Card");
-            Console.WriteLine("2. PayPal");
-            Console.WriteLine("3. Cash on Delivery");
-            Console.Write("Option: ");
-            int option = Convert.ToInt32(Console.ReadLine());
-
-            if (option == 1)
-            {
-                paymentType = "Credit Card";
-            } else if (option == 2)
-            {
-                paymentType = "PayPal";
-            } else if (option == 3)
-            {
-                paymentType = "Cash on Delivery";
-            } else
-            {
-                Console.WriteLine(" ");
-                Console.WriteLine("Please Select a Valid Payment Type!");
-            }
-        }
-        public void setState(OrderState state)
+        public void setState(IOrderState state)
         {
             this.state = state;
         }
@@ -158,21 +134,29 @@ namespace SDP_ASG
         {
             state.removeItem(item);
         }
-        public void submit()
+        public void requestPayment()
         {
-            state.submit();
+            paymentType = state.requestPayment();    
         }
         public void processPayment()
         {
-            state.processPayment();
+            paymentSuccessful = state.processPayment();
+        }
+        public void prepare()
+        {
+            state.prepare();
         }
         public void deliver()
         {
             state.deliver();
         }
-        public void archive()
+        public void markDelivered()
         {
-            state.archive();
+            state.markDelivered();
+        }
+        public void archive(Boolean Cancelled)
+        {
+            state.archive(Cancelled);
         }
     }
 }

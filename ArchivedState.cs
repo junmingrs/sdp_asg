@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SDP_ASG
 {
-    public class ArchivedState : OrderState
+    public class ArchivedState : IOrderState
     {
         private Order order;
 

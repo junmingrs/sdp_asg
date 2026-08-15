@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SDP_ASG
 {
-    public class SubmittedState : OrderState
+    public class SubmittedState : IOrderState
     {
         private Order order;
 
@@ -23,22 +23,32 @@ namespace SDP_ASG
             Console.WriteLine(" ");
             Console.WriteLine("Order is already Submitted!");
         }
-        public void submit()
+        public string requestPayment()
         {
             Console.WriteLine(" ");
             Console.WriteLine("Order is already Submitted!");
+            return order.PaymentType;
         }
-        public void processPayment()
+        public Boolean processPayment()
         {
-            order.selectPaymentType();
             order.setState(order.Preparing);
+            Console.WriteLine("\nOrder sent to be prepared");
+            return true;
+        }
+        public void prepare()
+        {
+            Console.WriteLine("\nOrder is not sent to be Prepared yet");
         }
         public void deliver()
         {
             Console.WriteLine(" ");
-            Console.WriteLine("Order is not Out For Delivery yet!");
+            Console.WriteLine("Order is not Prepared yet!");
         }
-        public void archive()
+        public void markDelivered()
+        {
+            Console.WriteLine("\nOrder is not Out For Delivery yet");
+        }
+        public void archive(Boolean cancelled)
         {
             Console.WriteLine(" ");
             Console.WriteLine("Order can't be Archived!");
