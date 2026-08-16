@@ -3,22 +3,24 @@ namespace SDP_ASG;
 
 public class InstallationDecorator : FurnitureDecorator
 {
+	private OrderItem orderItem;
 	private double installationFee;
 	private string scheduledDate;
 
-	public InstallationDecorator(Furniture item, string scheduledDate) : base(item)
+	public InstallationDecorator(OrderItem item, string scheduledDate)
 	{
+		this.orderItem = item;
 		this.installationFee = 80.00;
 		this.scheduledDate = scheduledDate;
 	}
 
 	public override string getDescription()
 	{
-		return item.getDescription() + $", Installation on {scheduledDate}";
+		return orderItem.getDescription() + $", Installation on {scheduledDate}";
 	}
 
 	public override double getPrice()
 	{
-		return item.getPrice() + installationFee;
+		return orderItem.getPrice() + installationFee;
 	}
 }

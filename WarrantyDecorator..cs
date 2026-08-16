@@ -1,24 +1,28 @@
 // Decorator Pattern - WarrantyDecorator (ConcreteDecorator)
+using System.Collections;
+
 namespace SDP_ASG;
 
 public class WarrantyDecorator : FurnitureDecorator
 {
-    private int warrantyYears;
+    private OrderItem orderItem;
     private double warrantyCost;
-
-    public WarrantyDecorator(Furniture item, int warrantyYears) : base(item)
+    private int warrantyYears;
+    public WarrantyDecorator(OrderItem orderItem, int warrantyYears)
     {
+        this.orderItem = orderItem;
         this.warrantyYears = warrantyYears;
         this.warrantyCost = warrantyYears * 50.00;
+
     }
 
     public override string getDescription()
     {
-        return item.getDescription() + $", {warrantyYears}-year Warranty";
+        return orderItem.getDescription() + $", {warrantyYears}-year Warranty";
     }
-
     public override double getPrice()
     {
-        return item.getPrice() + warrantyCost;
+        return orderItem.getPrice() + warrantyCost;
     }
 }
+

@@ -4,8 +4,8 @@ using System.Text;
 
 namespace SDP_ASG
 {
-    public interface Command
+    public interface ICommand
     {
-        public void purchase();
+        public Order execute();
     }
 }

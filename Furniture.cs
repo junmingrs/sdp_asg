@@ -19,6 +19,7 @@ public abstract class Furniture : FurnitureComponent
     public int Width { get { return width; } set { width = value; } }
     public int Depth { get { return depth; } set { depth = value; } }
 
+    public Furniture() { }
     public Furniture(string brand, string type, string colour, string material, int height, int width, int depth, double price)
     {
         this.brand = brand;
@@ -33,7 +34,7 @@ public abstract class Furniture : FurnitureComponent
 
     public virtual string getDescription()
     {
-        return $"Furniture: {this.brand}, {this.type}, {this.colour}, {this.material} of {this.height}cm x{this.width}cm x{this.depth}cm, costing ${price}";
+        return $"{this.type}: {this.brand}, {this.colour}, {this.material} of {this.height}cm x{this.width}cm x{this.depth}cm";
     }
 
     public virtual double getPrice()

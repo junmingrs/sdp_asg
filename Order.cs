@@ -1,25 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace SDP_ASG
 {
     public class Order
     {
-        private OrderState created;
-        private OrderState submitted;
-        private OrderState preparing;
-        private OrderState oFD;
-        private OrderState delivered;
-        private OrderState archived;
-        private OrderState state;
+        private IOrderState created;
+        private IOrderState submitted;
+        private IOrderState preparing;
+        private IOrderState prepared;
+        private IOrderState oFD;
+        private IOrderState delivered;
+        private IOrderState state;
 
         private string orderID;
-        private Boolean isPrepared;
-        private Boolean isCancelled;
+        private Boolean paymentSuccessful;
         private double price;
         private string paymentType;
-        private DateTime deliveryTime;
+        private TimeOnly deliveryTime;
         private string deliveryAddress;
         private List<OrderItem> orderItems = new List<OrderItem>();
 
@@ -30,12 +30,13 @@ namespace SDP_ASG
         public double Price
         {
             get { return price; }
+            set { price = value; }
         }
         public string PaymentType
         {
             get { return paymentType; }
         }
-        public DateTime DeliveryTime
+        public TimeOnly DeliveryTime
         {
             get { return deliveryTime; }
         }
@@ -47,41 +48,31 @@ namespace SDP_ASG
         {
             get { return orderItems; }
         }
-        public Boolean IsPrepared
-        {
-            get { return isPrepared; }
-            set { isPrepared = value; }
-        }
-        public Boolean IsCancelled
-        {
-            get { return isCancelled; }
-            set { IsCancelled = value; }
-        }
-        public OrderState Created
+        public IOrderState Created
         {
             get { return created; }
         }
-        public OrderState Submitted
+        public IOrderState Submitted
         {
             get { return submitted; }
         }
-        public OrderState Preparing
+        public IOrderState Preparing
         {
             get { return preparing; }
         }
-        public OrderState OFD
+        public IOrderState Prepared
+        {
+            get { return prepared; }
+        }
+        public IOrderState OFD
         {
             get { return oFD; }
         }
-        public OrderState Delivered
+        public IOrderState Delivered
         {
             get { return delivered; }
         }
-        public OrderState Archived
-        {
-            get { return archived; }
-        }
-        public OrderState State
+        public IOrderState State
         {
             get { return state; }
         }
@@ -91,62 +82,122 @@ namespace SDP_ASG
             created = new CreatedState(this);
             submitted = new SubmittedState(this);
             preparing = new PreparingState(this);
+            prepared = new PreparedState(this);
             oFD = new OFDState(this);
             delivered = new DeliveredState(this);
-            archived = new ArchivedState(this);
 
             state = created;
             string orderIDBase = "ORD";
-            orderID = orderIDBase += (id += 1).ToString();
+            orderID = orderIDBase += (id += 1).ToString("0000");
         }
 
-        public double getPrice()
+        public void viewOrderItems()
         {
-            foreach(OrderItem item in orderItems)
+            Console.WriteLine("\n------------------------------");
+            Console.WriteLine($"          Your Order          ");
+            Console.WriteLine("------------------------------");
+            if (OrderItems.Count() == 0)
             {
-                price += item.getPrice();
+                Console.WriteLine("Order is empty - Add an Item first");
             }
-            return price;
+            else
+            {
+                foreach (OrderItem f in OrderItems)
+                {
+                    string[] details = f.getDescription().Split(",");
+                    if (details.Count() == 5)
+                    {
+                        string type = details[0].Split(":")[0];
+                        string brand = details[0].Split(":")[1].Replace(" ", "");
+                        string colour = details[1].Replace(" ", "");
+                        string warranty = details[3];
+                        string installation = details[^1];
+                        Console.WriteLine($"{type}: {brand}, {colour}" +
+                            $"\n -{warranty},{installation} - ${f.getPrice().ToString("0.00")}");
+                    }
+                    else if (details.Count() == 4)
+                    {
+                        string type = details[0].Split(":")[0];
+                        string brand = details[0].Split(":")[1].Replace(" ", "");
+                        string colour = details[1].Replace(" ", "");
+                        string addon = details[^1];
+                        Console.WriteLine($"{type}: {brand}, {colour}" +
+                            $"\n -{addon} - ${f.getPrice().ToString("0.00")}");
+                    }
+                    else
+                    {
+                        string type = details[0].Split(":")[0];
+                        string brand = details[0].Split(":")[1].Replace(" ", "");
+                        string colour = details[1].Replace(" ", "");
+                        Console.WriteLine($"{type}: {brand}, {colour} - ${f.getPrice().ToString("0.00")}");
+                    }
+                }
+                Console.WriteLine($" -> Total Price: ${Price.ToString("0.00")}");
+            }  
+        }
+        public void viewOrderDetails()
+        {
+            Console.WriteLine("\n----- Order Details -----");
+            Console.WriteLine($"OrderID: {OrderID}");
+            if (PaymentType != null) { Console.WriteLine($"Payment Type: {PaymentType}"); }
+            else { Console.WriteLine($"Payment Type: N/a"); }
+            if (Price != 0) { Console.WriteLine($"Price: ${Price}"); }
+            else { Console.WriteLine($"Price: $0"); }
+            if (DeliveryAddress != null) { Console.WriteLine($"Delivery Address and Time: {DeliveryAddress} | {DeliveryTime}"); }
+            else { Console.WriteLine($"Delivery Address and Time: N/a | N/a "); }
+            if (State is OFDState)
+            {
+                Console.WriteLine("Status: Out For Delivery");
+            }
+            else
+            {
+                Console.WriteLine($"Status: {State.ToString().Replace("SDP_ASG.", "").Replace("State", "")}");
+            }
         }
         public void refund()
         {
             Console.WriteLine(" ");
-            Console.WriteLine($"Refunding {Price} from {OrderID}...");
+            Console.WriteLine($"Refunding ${Price.ToString("0.00")} from {OrderID}...");
         }
-        public void editDeliveryTime(DateTime time)
+        public void editDeliveryDetails()
+        {
+            Boolean timeloop = false;
+            while (!timeloop)
+            {
+                Console.Write("\nPlease enter a time for delivery (e.g., 14:30 or 2:30 PM): ");
+                if (TimeOnly.TryParse(Console.ReadLine(), out TimeOnly time))
+                {
+                    deliveryTime = time;
+                    timeloop = true;
+                }
+                else
+                {
+                    Console.WriteLine("\nInvalid time format. Please try again.");
+                }
+            }
+            Boolean addressloop = false;
+            while (!addressloop)
+            {
+                Console.Write("\nEnter Delivery Address: ");
+                string address = Console.ReadLine() ?? "";
+                if (address.Length == 0)
+                { 
+                    Console.WriteLine("\nPlease input a valid Address!");
+                } 
+                else
+                {
+                    deliveryAddress = address;
+                    addressloop = true;
+                }
+            }
+            Console.WriteLine($"\nDelivery Time and Address Entered: {deliveryTime} | {deliveryAddress}");
+        }
+        public void editDeliveryDetails(TimeOnly time, string address)
         {
             deliveryTime = time;
-        }
-        public void editDeliveryAddress(string address)
-        {
             deliveryAddress = address;
         }
-        public void selectPaymentType()
-        {
-            Console.WriteLine(" ");
-            Console.WriteLine("Please Select Payment Type");
-            Console.WriteLine("1. Credit Card");
-            Console.WriteLine("2. PayPal");
-            Console.WriteLine("3. Cash on Delivery");
-            Console.Write("Option: ");
-            int option = Convert.ToInt32(Console.ReadLine());
-
-            if (option == 1)
-            {
-                paymentType = "Credit Card";
-            } else if (option == 2)
-            {
-                paymentType = "PayPal";
-            } else if (option == 3)
-            {
-                paymentType = "Cash on Delivery";
-            } else
-            {
-                Console.WriteLine(" ");
-                Console.WriteLine("Please Select a Valid Payment Type!");
-            }
-        }
-        public void setState(OrderState state)
+        public void setState(IOrderState state)
         {
             this.state = state;
         }
@@ -158,21 +209,29 @@ namespace SDP_ASG
         {
             state.removeItem(item);
         }
-        public void submit()
+        public void requestPayment()
         {
-            state.submit();
+            paymentType = state.requestPayment();    
         }
         public void processPayment()
         {
-            state.processPayment();
+            paymentSuccessful = state.processPayment();
+        }
+        public void prepare()
+        {
+            state.prepare();
         }
         public void deliver()
         {
             state.deliver();
         }
-        public void archive()
+        public void markDelivered()
         {
-            state.archive();
+            state.markDelivered();
+        }
+        public void cancel()
+        {
+            state.cancel();
         }
     }
 }

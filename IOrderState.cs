@@ -4,13 +4,15 @@ using System.Text;
 
 namespace SDP_ASG
 {
-    public interface OrderState
+    public interface IOrderState
     {
         public void addItem(OrderItem item);
         public void removeItem(OrderItem item);
-        public void submit();
-        public void processPayment();
+        public string requestPayment();
+        public Boolean processPayment();
+        public void prepare();
         public void deliver();
-        public void archive();
+        public void markDelivered();
+        public void cancel();
     }
 }

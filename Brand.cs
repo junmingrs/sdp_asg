@@ -6,6 +6,11 @@ public class Brand : Subject
     private List<Observer> observers;
     private List<SpecialOffer> offers;
 
+    public List<Observer> Observers
+    {
+        get { return observers; }
+    }
+
     public Brand(string brandName)
     {
         this.brandName = brandName;
@@ -17,11 +22,15 @@ public class Brand : Subject
     public void registerObserver(Observer o)
     {
         observers.Add(o);
+        Customer c = (Customer)o;
+        Console.WriteLine($"{c.getName()} subscribed to {brandName}!");
     }
 
     public void removeObserver(Observer o)
     {
         observers.Remove(o);
+        Customer c = (Customer)o;
+        Console.WriteLine($"{c.getName()} unsubscribed from {brandName}.");
     }
 
     public void notifyObservers()

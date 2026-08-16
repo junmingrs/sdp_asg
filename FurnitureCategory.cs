@@ -59,6 +59,14 @@ public class FurnitureCategory : FurnitureComponent
     }
     public override void print()
     {
-        Console.WriteLine($"FurnitureCategory: {this.category}");
+        string header = $"FurnitureCategory: {this.category}";
+        int i = header.Count();
+        Console.WriteLine(" ");
+        Console.WriteLine(" " + header);
+        for (int i2 = 0; i2 < i + 1; i2++)
+        {
+            Console.Write("-");
+        } 
+        Console.WriteLine("-");
     }
 }
