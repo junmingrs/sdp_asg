@@ -67,7 +67,7 @@ void mainMenu()
     }
 }
 
-async void EmployeeMenu()
+void EmployeeMenu()
 {
     int employeeChoice = -1;
     while (employeeChoice != 0)
@@ -100,7 +100,7 @@ async void EmployeeMenu()
             case 6: AddOffer(brands); break;
             case 7: PrepareOrder(orders); break;
             case 8: DeliverOrder(orders); break;
-            case 9: await MarkOrderAsDelivered(orders); break;
+            case 9: MarkOrderAsDelivered(orders); break;
             case 0: currentEmployee = null; Console.WriteLine(" "); Console.WriteLine("Logging Out..."); break;
             default: Console.WriteLine(" "); Console.WriteLine("Invalid choice."); break;
         }
@@ -546,7 +546,7 @@ void DeliverOrder(List<Order> orders)
         }
     }
 }
-async Task MarkOrderAsDelivered(List<Order> orders)
+void MarkOrderAsDelivered(List<Order> orders)
 {
     Console.WriteLine(" ");
     Console.WriteLine("----- Orders -----");
@@ -572,14 +572,13 @@ async Task MarkOrderAsDelivered(List<Order> orders)
         {
             Order selectedOrder = deliverOrders[idx - 1];
             selectedOrder.markDelivered();
-            var oneHour = TimeSpan.FromHours(1);
-            using var timer = new PeriodicTimer(oneHour);
 
-            while (await timer.WaitForNextTickAsync())
+            _ = Task.Run(async () =>
             {
-                orders.Remove(selectedOrder);
-                Console.WriteLine($"{selectedOrder.OrderID} has been archived");
-            }
+                await Task.Delay(TimeSpan.FromHours(1));
+                lock (orders) { orders.Remove(selectedOrder); }
+                Console.WriteLine($"\n{selectedOrder.OrderID} has been archived");
+            });
         }
         else
         {

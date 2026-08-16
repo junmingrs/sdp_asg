@@ -39,7 +39,14 @@ public abstract class Furniture : FurnitureComponent
 
     public virtual double getPrice()
     {
-        return this.price;
+        List<SpecialOffer> offers = this.brand.getOffers();
+        double discounts = 0.0;
+        foreach (SpecialOffer offer in offers)
+        {
+            if (discounts > 100.0) break;
+            discounts += offer.getDiscount();
+        }
+        return this.price - (this.price * (discounts / 100));
     }
 
     public override IIterator createIterator(string iterType, string type)
