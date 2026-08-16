@@ -48,10 +48,9 @@ namespace SDP_ASG
         {
             Console.WriteLine("\nOrder is not Out For Delivery yet");
         }
-        public void archive(Boolean cancelled)
+        public void cancel()
         {
-            Console.WriteLine(" ");
-            Console.WriteLine("Order can't be Archived!");
+            Console.WriteLine("\nOrder is cancelled");
         }
     }
 }

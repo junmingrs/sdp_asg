@@ -13,6 +13,6 @@ namespace SDP_ASG
         public void prepare();
         public void deliver();
         public void markDelivered();
-        public void archive(Boolean cancelled);
+        public void cancel();
     }
 }

@@ -19,6 +19,7 @@ public abstract class Furniture : FurnitureComponent
     public int Width { get { return width; } set { width = value; } }
     public int Depth { get { return depth; } set { depth = value; } }
 
+    public Furniture() { }
     public Furniture(string brand, string type, string colour, string material, int height, int width, int depth, double price)
     {
         this.brand = brand;

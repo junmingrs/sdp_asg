@@ -7,7 +7,7 @@ namespace SDP_ASG
 {
     public class OrderItem : Furniture
     {
-        public OrderItem() : base(null, null, null, null, 0, 0, 0, 0){ }
+        public OrderItem() : base() {}
         public OrderItem(Furniture item) : base(item.Brand, item.Type, item.Colour, item.Material, item.Height, item.Width, item.Depth, item.getPrice())
         { }
        

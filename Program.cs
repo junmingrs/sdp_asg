@@ -86,6 +86,7 @@ void EmployeeMenu()
         Console.WriteLine("6) Add new special offer to brand");
         Console.WriteLine("7) View Orders to Prepare");
         Console.WriteLine("8) View Orders to Send");
+        Console.WriteLine("9) Mark Order as Delivered");
         Console.WriteLine("0) Log Out");
         Console.Write("Your choice? ");
 
@@ -99,9 +100,10 @@ void EmployeeMenu()
             case 4: AddFurniture(root); break;
             case 5: ViewOffers(brands); break;
             case 6: AddOffer(brands); break;
-            case 7: PrepareOrder(); break;
-            case 8: SendOrder(); break;
-            case 9: AddAddOns(root); break;
+            case 7: PrepareOrder(orders); break;
+            case 8: DeliverOrder(orders); break;
+            case 9: MarkOrderAsDelivered(orders); break;
+            case 10: AddAddOns(root); break;
             case 0: currentEmployee = null; Console.WriteLine(" "); Console.WriteLine("Logging Out..."); break;
             default: Console.WriteLine(" "); Console.WriteLine("Invalid choice."); break;
         }
@@ -123,8 +125,10 @@ void CustomerMenu()
         Console.WriteLine("5) Unsubscribe from a brand");
         Console.WriteLine("6) View brands & special offers");
         Console.WriteLine("7) Create An Order");
-        Console.WriteLine("8) View Current Orders");
-        Console.WriteLine("9) View Order History");
+        Console.WriteLine("8) View All Orders");
+        Console.WriteLine("9) Cancel An Order");
+        Console.WriteLine("10) Command HotKey");
+        Console.WriteLine("11) View Command Interface");
         Console.WriteLine("0) Log Out");
         Console.Write("Your choice? ");
 
@@ -139,8 +143,10 @@ void CustomerMenu()
             case 5: Unsubscribe(currentCustomer, brands); break;
             case 6: ViewOffers(brands); break;
             case 7: CreateOrder(currentCustomer); break;
-            case 8: ViewCurrentOrders(currentCustomer); break;
-            case 9: ViewOrderHistory(currentCustomer); break;
+            case 8: currentCustomer.viewOrders(); break;
+            case 9: CancelOrder(currentCustomer); break;
+            case 10: Order newOrder = currentCustomer.executeSelectedCommand(); if (newOrder != null) { orders.Add(newOrder); }; break;
+            case 11: CommandInterface(currentCustomer); break;
             case 0: currentCustomer = null; Console.WriteLine(" "); Console.WriteLine("Logging Out..."); break;
             default: Console.WriteLine(" "); Console.WriteLine("Invalid choice."); break;
         }
@@ -491,77 +497,132 @@ double PromptDouble(string hint, double defaultValue)
     }
 }
 
-void PrepareOrder()
+void PrepareOrder(List<Order> orders)
 {
     Console.WriteLine(" ");
-    Console.WriteLine("--- Orders ---");
+    Console.WriteLine("----- Orders -----");
     int i = 1;
     foreach (Order order in orders)
     {
         if (order.State is PreparingState)
         {
-            Console.WriteLine($"{i.ToString()}. {order.OrderID}");
+            Console.WriteLine($"{i}) {order.OrderID}");
         }
-        i += 1;
+        i++;
     }
-    Console.WriteLine(" ");
-    Console.WriteLine("Enter OrderID to Prepare");
-    Console.Write("Enter 0 to exit: ");
-    string orderOption = Console.ReadLine();
-    if (Convert.ToInt32(orderOption) == 0)
+    Console.Write("\nSelect Order to Prepare: ");
+    if (int.TryParse(Console.ReadLine(), out int idx) && idx >= 1 && idx <= orders.Count())
     {
-        Console.WriteLine(" ");
-        Console.WriteLine("Returning to Employee Console");
-        Console.WriteLine(" ");
+        Order selectedOrder = orders[idx - 1];
+        selectedOrder.prepare();
     }
-    Order selectOrder = null;
-    foreach (Order o2 in orders)
+    else
     {
-        if (o2.OrderID == orderOption)
-        {
-            selectOrder = o2;
-        }
+        Console.WriteLine("\nInvalid choice.");
     }
-    selectOrder.prepare();
 }
 
-void SendOrder()
+void DeliverOrder(List<Order> orders)
 {
     Console.WriteLine(" ");
-    Console.WriteLine("--- Orders ---");
+    Console.WriteLine("----- Orders -----");
     int i = 1;
+    List<Order> ordersToDeliver = new List<Order>();
+    foreach (Order order in orders)
+    {
+        if (order.State is PreparedState)
+        {
+            Console.WriteLine($"{i}) {order.OrderID}");
+            ordersToDeliver.Add(order);
+            i++;
+        }
+    }
+    if (ordersToDeliver.Count == 0)
+    {
+        Console.WriteLine("There are no Orders that are ready to be delivered");
+    }
+    else
+    {
+        Console.Write("\nSelect Order to send for delivery: ");
+        if (int.TryParse(Console.ReadLine(), out int idx) && idx >= 1 && idx <= ordersToDeliver.Count())
+        {
+            Order selectedOrder = ordersToDeliver[idx - 1];
+            selectedOrder.deliver();
+        }
+        else
+        {
+            Console.WriteLine("\nInvalid choice.");
+        }
+    }
+}
+async Task MarkOrderAsDelivered(List<Order> orders)
+{
+    Console.WriteLine(" ");
+    Console.WriteLine("----- Orders -----");
+    int i = 1;
+    List<Order> deliverOrders = new List<Order>();
     foreach (Order order in orders)
     {
         if (order.State is OFDState)
         {
-            Console.WriteLine($"{i.ToString()}. {order.OrderID}");
+            Console.WriteLine($"{i}) {order.OrderID}");
+            deliverOrders.Add(order);
+            i++;
         }
-        i += 1;
     }
-    Console.WriteLine(" ");
-    Console.WriteLine("Enter OrderID to Send Out");
-    Console.Write("Enter 0 to exit: ");
-    string orderOption = Console.ReadLine();
-    if (Convert.ToInt32(orderOption) == 0)
+    if (deliverOrders.Count() == 0)
     {
-        Console.WriteLine(" ");
-        Console.WriteLine("Returning to Employee Console");
-        Console.WriteLine(" ");
+        Console.WriteLine("There are no Orders that are Out for Delivery");
     }
-    Order selectOrder = null;
-    foreach (Order o2 in orders)
+    else
     {
-        if (o2.OrderID == orderOption)
+        Console.Write("\nSelect Order to mark as Delivered: ");
+        if (int.TryParse(Console.ReadLine(), out int idx) && idx >= 1 && idx <= deliverOrders.Count())
         {
-            selectOrder = o2;
+            Order selectedOrder = deliverOrders[idx - 1];
+            selectedOrder.markDelivered();
+            var oneHour = TimeSpan.FromHours(1);
+            using var timer = new PeriodicTimer(oneHour);
+
+            while (await timer.WaitForNextTickAsync())
+            {
+                orders.Remove(selectedOrder);
+                Console.WriteLine($"{selectedOrder.OrderID} has been archived");
+            }
+        }
+        else
+        {
+            Console.WriteLine("\nInvalid choice.");
         }
     }
-    selectOrder.deliver();
-    Console.WriteLine(" ");
-    Console.WriteLine($"{selectOrder.OrderID} has been Sent Out.");
-    Console.WriteLine(" ");
 }
+void CommandInterface(Customer customer)
+{
+    LastOrderCommand LOC = new LastOrderCommand(customer);
+    ReorderFromHistoryCommand ROFHC = new ReorderFromHistoryCommand(customer);
+    customer.addCommand(LOC);
+    customer.addCommand(ROFHC);
+    
+    int commandchoice = -1;
+    while (commandchoice != 0)
+    {
+        Console.WriteLine("\nChoose a command to set for the Hotkey");
+        Console.WriteLine("1) Reorder Last Order");
+        Console.WriteLine("2) Reorder from Order History");
+        Console.WriteLine("0) Exit");
+        Console.Write("Your Choice? ");
 
+        if (!int.TryParse(Console.ReadLine(), out commandchoice)) commandchoice = -1;
+
+        switch (commandchoice)
+        {
+            case 1: customer.setCommandHotkey(1); commandchoice = 0; Console.WriteLine("\nReturning to Menu"); break;
+            case 2: customer.setCommandHotkey(2); commandchoice = 0; Console.WriteLine("\nReturning to Menu"); break;
+            case 0: Console.WriteLine("\nReturning to Menu"); break;
+            default: Console.WriteLine(" "); Console.WriteLine("Invalid choice."); break;
+        }
+    }
+}
 void CreateOrder(Customer customer)
 {
     Order order = null;
@@ -571,8 +632,9 @@ void CreateOrder(Customer customer)
     } 
     else
     {
-        order = new Order(customer.OrderList.Count());
+        order = new Order(orders.Count());
         customer.addOrder(order);
+        orders.Add(order);
     }
     int orderchoice = -1;
     while (orderchoice != 0)
@@ -610,14 +672,21 @@ void CreateOrder(Customer customer)
             case 1: ViewItemDetail(furnitures); break;
             case 2: AddItemIntoOrder(furnitures, order); break;
             case 3: RemoveItemFromOrder(order); break;
-            case 4: ViewOrder(order); break;
+            case 4: order.viewOrderItems(); break;
             case 5: if (CheckoutOrder(order)) { orderchoice = 0; Console.WriteLine("\nReturning to Menu"); }; break;
             case 0: Console.WriteLine(" "); Console.WriteLine("Exiting Item Catalog"); break;
             default: Console.WriteLine(" "); Console.WriteLine("Invalid choice."); break;
         }
     }
 }
-
+void CancelOrder(Customer customer)
+{
+    Order cancelled = customer.cancelOrder();
+    if (cancelled != null)
+    {
+        orders.Remove(cancelled);
+    }
+}
 void ViewItemDetail(List<Furniture> furnitures) 
 {
     Console.Write("\nSelect Item to View: ");
@@ -716,52 +785,9 @@ void RemoveItemFromOrder(Order order) // Need to redo Display
         }
     }
 }
-void ViewOrder(Order order)
-{
-    Console.WriteLine("\n------------------------------");
-    Console.WriteLine($"          Your Order          ");
-    Console.WriteLine("------------------------------");
-    if (order.OrderItems.Count() == 0)
-    {
-        Console.WriteLine("Order is empty - Add an Item first");
-    }
-    else
-    {
-        foreach (OrderItem f in order.OrderItems)
-        {
-            string[] details = f.getDescription().Split(",");
-            if (details.Count() == 5)
-            {
-                string type = details[0].Split(":")[0];
-                string brand = details[0].Split(":")[1].Replace(" ", "");
-                string colour = details[1].Replace(" ", "");
-                string warranty = details[3];
-                string installation = details[^1];
-                Console.WriteLine($"{type}: {brand}, {colour}" +
-                    $"\n -{warranty},{installation} - ${f.getPrice().ToString("0.00")}");
-            }
-            else if (details.Count() == 4)
-            {
-                string type = details[0].Split(":")[0];
-                string brand = details[0].Split(":")[1].Replace(" ", "");
-                string colour = details[1].Replace(" ", "");
-                string addon = details[^1];
-                Console.WriteLine($"{type}: {brand}, {colour}" +
-                    $"\n -{addon} - ${f.getPrice().ToString("0.00")}");
-            }
-            else
-            {
-                string type = details[0].Split(":")[0];
-                string brand = details[0].Split(":")[1].Replace(" ", "");
-                string colour = details[1].Replace(" ", "");
-                Console.WriteLine($"{type}: {brand}, {colour} - ${f.getPrice().ToString("0.00")}");
-            }
-        }
-    }
-}
 Boolean CheckoutOrder(Order order)
 {
-    ViewOrder(order);
+    order.viewOrderItems();
     if (order.OrderItems.Count() == 0)
     {
         return false;
@@ -773,8 +799,10 @@ Boolean CheckoutOrder(Order order)
         string choice = Console.ReadLine().ToLower();
         if (choice == "y")
         {
+            order.editDeliveryDetails();
             order.requestPayment();
             order.processPayment();
+            order.viewOrderDetails();
             return true;
         }
         else if (choice == "n")
@@ -788,20 +816,6 @@ Boolean CheckoutOrder(Order order)
             return false;
         }
     }
-}
-void CancelOrder(Customer customer)
-{
-
-}
-
-void ViewCurrentOrders(Customer customer)
-{
-
-}
-
-void ViewOrderHistory(Customer customer)
-{
-
 }
 
 mainMenu();

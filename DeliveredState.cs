@@ -48,19 +48,10 @@ namespace SDP_ASG
         {
             Console.WriteLine("\nOrder is already delivered");
         }
-        public void archive(Boolean cancelled)
+    
+        public void cancel()
         {
-            if (cancelled)
-            {
-                order.IsCancelled = cancelled;
-                order.setState(order.Archived);
-                Console.WriteLine(" ");
-                Console.WriteLine("Order Cancelled.");
-            }
-            else
-            {
-                Console.WriteLine("Order Archived");
-            }
+            Console.WriteLine("Cannot cancel Orders that are delivered");
         }
     }
 }

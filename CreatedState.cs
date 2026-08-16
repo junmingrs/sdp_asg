@@ -16,6 +16,7 @@ namespace SDP_ASG
         public void addItem(OrderItem item)
         {
             order.OrderItems.Add(item);
+            order.Price += item.getPrice();
             Console.WriteLine($"Added Item - {item.getDescription()} - ${item.getPrice().ToString("0.00")}");
         }
         public void removeItem(OrderItem item)
@@ -67,10 +68,9 @@ namespace SDP_ASG
         {
             Console.WriteLine("\nOrder is not out for delivery yet!");
         }
-        public void archive(Boolean cancelled)
+        public void cancel()
         {
-            Console.WriteLine(" ");
-            Console.WriteLine("Order can't be Archived!");
+            Console.WriteLine("\nOrder is Cancelled");
         }
     }
 }

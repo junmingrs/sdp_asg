@@ -49,15 +49,10 @@ namespace SDP_ASG
             Console.WriteLine("\nOrder is marked as delivered");
             order.setState(order.Delivered);
         }
-        public void archive(Boolean cancelled)
+        public void cancel()
         {
-            if (cancelled)
-            {
-                order.IsCancelled = cancelled;
-                order.setState(order.Archived);
-                Console.WriteLine(" ");
-                Console.WriteLine("Cancelled Order Succesfully");
-            }
+            Console.WriteLine(" ");
+            Console.WriteLine("Cancelled Order Succesfully");
         }
     }
 }
