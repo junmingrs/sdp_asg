@@ -37,8 +37,8 @@ List<Employee> employees = new List<Employee> { Emptest1, Emptest2 };
 List<Order> orders = new List<Order>();
 Customer? currentCustomer = null;
 Employee? currentEmployee = null;
- 
-// ── MAIN MENU ──────────────────────────────────
+
+// ── MENUS ──────────────────────────────────
 void mainMenu()
 {
     int choice = -1;
@@ -76,8 +76,7 @@ void EmployeeMenu()
         Console.WriteLine("\n=============================");
         Console.WriteLine("       Employee Console      ");
         Console.WriteLine("=============================");
-        if (currentEmployee != null)
-            Console.WriteLine($"   Logged in as: {currentEmployee.Name}");
+        Console.WriteLine($"   Logged in as: {currentEmployee.Name}");
         Console.WriteLine("1) Browse all furniture in catalog");
         Console.WriteLine("2) Browse furniture by type");
         Console.WriteLine("3) Browse furniture by brand");
@@ -103,7 +102,7 @@ void EmployeeMenu()
             case 7: PrepareOrder(orders); break;
             case 8: DeliverOrder(orders); break;
             case 9: MarkOrderAsDelivered(orders); break;
-            case 10: AddAddOns(root); break;
+            // case 10: AddAddOns(root); break; - Technically should never be called | here for testing reasons
             case 0: currentEmployee = null; Console.WriteLine(" "); Console.WriteLine("Logging Out..."); break;
             default: Console.WriteLine(" "); Console.WriteLine("Invalid choice."); break;
         }
@@ -310,7 +309,6 @@ void Unsubscribe(Customer? customer, List<Brand> brands) // Changed to only disp
         else { Console.WriteLine(" "); Console.WriteLine("Invalid choice."); }
     }
 }
-
 void ViewOffers(List<Brand> brands)
 {
     Console.WriteLine("\n--- Brands & Special Offers ---");
@@ -344,20 +342,32 @@ void AddOffer(List<Brand> brands)
 void AddAddOns(FurnitureComponent root) // Has been removed take note
 {
     /*
-    Console.Write("Enter furniture type (e.g. Sofa): ");
-    string type = Console.ReadLine() ?? "";
-    IIterator it = root.createIterator("Type", type);
-
-    Furniture furniture = null;
+    Console.WriteLine("\n--- Available Furniture ---");
+    IIterator it = root.createIterator("Normal", "");
+    List<Furniture> furnitureList = new List<Furniture>();
+    int count = 1;
     while (it.hasNext())
     {
         FurnitureComponent c = (FurnitureComponent)it.next()!;
-        if (c is Furniture f) { furniture = f; break; }
+        if (c is Furniture f)
+        {
+            Console.WriteLine($"{count}) {f.getDescription()} - ${f.getPrice():F2}");
+            furnitureList.Add(f);
+            count++;
+        }
     }
 
-    if (furniture == null) { Console.WriteLine("No furniture found."); return; }
+    if (furnitureList.Count == 0) { Console.WriteLine("No furniture available."); return; }
 
-    Console.WriteLine($"Selected: {furniture.getDescription()} - ${furniture.getPrice():F2}");
+
+    Console.Write("Select furniture: ");
+    if (!int.TryParse(Console.ReadLine(), out int idx) || idx < 1 || idx > furnitureList.Count)
+    {
+        Console.WriteLine("Invalid choice."); return;
+    }
+
+    Furniture furniture = furnitureList[idx - 1];
+    Console.WriteLine($"\nSelected: {furniture.getDescription()} - ${furniture.getPrice():F2}");
 
     Console.Write("Add warranty? (1 = 1 year, 2 = 2 years, 0 = no): ");
     string w = Console.ReadLine() ?? "0";
@@ -367,8 +377,13 @@ void AddAddOns(FurnitureComponent root) // Has been removed take note
     Console.Write("Add installation? (y/n): ");
     if ((Console.ReadLine() ?? "").ToLower() == "y")
     {
-        Console.Write("Enter date (e.g. 2026-09-01): ");
-        string date = Console.ReadLine() ?? "";
+        string date = "";
+        while (date.Length == 0)
+        {
+            Console.Write("Enter date (e.g. 2026-09-01): ");
+            date = Console.ReadLine() ?? "";
+            if (date.Length == 0) Console.WriteLine("Date cannot be empty!");
+        }
         furniture = new InstallationDecorator(furniture, date);
     }
 
@@ -502,26 +517,34 @@ void PrepareOrder(List<Order> orders)
     Console.WriteLine(" ");
     Console.WriteLine("----- Orders -----");
     int i = 1;
+    List<Order> ordersToPrepare = new List<Order>();
     foreach (Order order in orders)
     {
         if (order.State is PreparingState)
         {
             Console.WriteLine($"{i}) {order.OrderID}");
-        }
-        i++;
+            ordersToPrepare.Add(order);
+            i++;
+        }  
     }
-    Console.Write("\nSelect Order to Prepare: ");
-    if (int.TryParse(Console.ReadLine(), out int idx) && idx >= 1 && idx <= orders.Count())
+    if (ordersToPrepare.Count == 0)
     {
-        Order selectedOrder = orders[idx - 1];
-        selectedOrder.prepare();
-    }
+        Console.WriteLine("There are no Orders to Prepare");
+    } 
     else
     {
-        Console.WriteLine("\nInvalid choice.");
+        Console.Write("\nSelect Order to Prepare: ");
+        if (int.TryParse(Console.ReadLine(), out int idx) && idx >= 1 && idx <= orders.Count())
+        {
+            Order selectedOrder = orders[idx - 1];
+            selectedOrder.prepare();
+        }
+        else
+        {
+            Console.WriteLine("\nInvalid choice.");
+        }
     }
 }
-
 void DeliverOrder(List<Order> orders)
 {
     Console.WriteLine(" ");
@@ -729,9 +752,8 @@ void AddItemIntoOrder(List<Furniture> furnitures, Order order)
         Console.WriteLine("\nInvalid choice.");
     }
 }
-void RemoveItemFromOrder(Order order) // Need to redo Display
+void RemoveItemFromOrder(Order order)
 {
-    int i = 1;
     Console.WriteLine("\n------------------------------");
     Console.WriteLine($"          Your Order          ");
     Console.WriteLine("------------------------------");
@@ -741,6 +763,7 @@ void RemoveItemFromOrder(Order order) // Need to redo Display
     }
     else
     {
+        int i = 1;
         foreach (OrderItem f in order.OrderItems)
         {
             string[] details = f.getDescription().Split(",");
@@ -774,15 +797,16 @@ void RemoveItemFromOrder(Order order) // Need to redo Display
                 i++;
             }
         }
-        Console.Write("\nSelect Item to Remove: ");
-        if (int.TryParse(Console.ReadLine(), out int idx) && idx >= 1 && idx <= order.OrderItems.Count())
-        {
-            order.removeItem(order.OrderItems[idx - 1]);
-        }
-        else
-        {
-            Console.WriteLine("\nInvalid choice.");
-        }
+        Console.WriteLine($" -> Total Price: ${order.Price.ToString("0.00")}");
+    }
+    Console.Write("\nSelect Item to Remove: ");
+    if (int.TryParse(Console.ReadLine(), out int idx) && idx >= 1 && idx <= order.OrderItems.Count())
+    {
+        order.removeItem(order.OrderItems[idx - 1]);
+    }
+    else
+    {
+        Console.WriteLine("\nInvalid choice.");
     }
 }
 Boolean CheckoutOrder(Order order)

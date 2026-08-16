@@ -22,6 +22,7 @@ namespace SDP_ASG
         public void removeItem(OrderItem item)
         {            
             order.OrderItems.Remove(item);
+            order.Price -= item.getPrice();
             Console.WriteLine($"Removed Item - {item.getDescription()} - ${item.getPrice().ToString("0.00")}");
         }
         public string requestPayment()

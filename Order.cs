@@ -96,45 +96,55 @@ namespace SDP_ASG
             Console.WriteLine("\n------------------------------");
             Console.WriteLine($"          Your Order          ");
             Console.WriteLine("------------------------------");
-            foreach (OrderItem f in OrderItems)
+            if (OrderItems.Count() == 0)
             {
-                string[] details = f.getDescription().Split(",");
-                if (details.Count() == 5)
-                {
-                    string type = details[0].Split(":")[0];
-                    string brand = details[0].Split(":")[1].Replace(" ", "");
-                    string colour = details[1].Replace(" ", "");
-                    string warranty = details[3];
-                    string installation = details[^1];
-                    Console.WriteLine($"{type}: {brand}, {colour}" +
-                        $"\n -{warranty},{installation} - ${f.getPrice().ToString("0.00")}");
-                }
-                else if (details.Count() == 4)
-                {
-                    string type = details[0].Split(":")[0];
-                    string brand = details[0].Split(":")[1].Replace(" ", "");
-                    string colour = details[1].Replace(" ", "");
-                    string addon = details[^1];
-                    Console.WriteLine($"{type}: {brand}, {colour}" +
-                        $"\n -{addon} - ${f.getPrice().ToString("0.00")}");
-                }
-                else
-                {
-                    string type = details[0].Split(":")[0];
-                    string brand = details[0].Split(":")[1].Replace(" ", "");
-                    string colour = details[1].Replace(" ", "");
-                    Console.WriteLine($"{type}: {brand}, {colour} - ${f.getPrice().ToString("0.00")}");
-                }
+                Console.WriteLine("Order is empty - Add an Item first");
             }
-            Console.WriteLine($" -> Total Price: ${Price.ToString("0.00")}");
+            else
+            {
+                foreach (OrderItem f in OrderItems)
+                {
+                    string[] details = f.getDescription().Split(",");
+                    if (details.Count() == 5)
+                    {
+                        string type = details[0].Split(":")[0];
+                        string brand = details[0].Split(":")[1].Replace(" ", "");
+                        string colour = details[1].Replace(" ", "");
+                        string warranty = details[3];
+                        string installation = details[^1];
+                        Console.WriteLine($"{type}: {brand}, {colour}" +
+                            $"\n -{warranty},{installation} - ${f.getPrice().ToString("0.00")}");
+                    }
+                    else if (details.Count() == 4)
+                    {
+                        string type = details[0].Split(":")[0];
+                        string brand = details[0].Split(":")[1].Replace(" ", "");
+                        string colour = details[1].Replace(" ", "");
+                        string addon = details[^1];
+                        Console.WriteLine($"{type}: {brand}, {colour}" +
+                            $"\n -{addon} - ${f.getPrice().ToString("0.00")}");
+                    }
+                    else
+                    {
+                        string type = details[0].Split(":")[0];
+                        string brand = details[0].Split(":")[1].Replace(" ", "");
+                        string colour = details[1].Replace(" ", "");
+                        Console.WriteLine($"{type}: {brand}, {colour} - ${f.getPrice().ToString("0.00")}");
+                    }
+                }
+                Console.WriteLine($" -> Total Price: ${Price.ToString("0.00")}");
+            }  
         }
         public void viewOrderDetails()
         {
             Console.WriteLine("\n----- Order Details -----");
             Console.WriteLine($"OrderID: {OrderID}");
-            Console.WriteLine($"Payment Type: {PaymentType}");
-            Console.WriteLine($"Price: ${Price}");
-            Console.WriteLine($"Delivery Address and Time: {DeliveryAddress} | {DeliveryTime}");
+            if (PaymentType != null) { Console.WriteLine($"Payment Type: {PaymentType}"); }
+            else { Console.WriteLine($"Payment Type: N/a"); }
+            if (Price != 0) { Console.WriteLine($"Price: ${Price}"); }
+            else { Console.WriteLine($"Price: $0"); }
+            if (DeliveryAddress != null) { Console.WriteLine($"Delivery Address and Time: {DeliveryAddress} | {DeliveryTime}"); }
+            else { Console.WriteLine($"Delivery Address and Time: N/a | N/a "); }
             if (State is OFDState)
             {
                 Console.WriteLine("Status: Out For Delivery");
