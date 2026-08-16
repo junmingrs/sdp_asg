@@ -6,7 +6,7 @@ public interface IBuilder
     IBuilder setColour(string colour);
     IBuilder setMaterial(string material);
     IBuilder setType(string type);
-    IBuilder setBrand(string brand);
+    IBuilder setBrand(Brand brand);
     IBuilder setPrice(double price);
     IBuilder Reset();
     Furniture build();

@@ -2,7 +2,7 @@ namespace SDP_ASG;
 
 public class TableBuilder : IBuilder
 {
-    private string brand = "ICKER";
+    private Brand brand = new Brand("ICKER");
     private int height = 120;
     private int width = 100;
     private int depth = 75;
@@ -13,7 +13,7 @@ public class TableBuilder : IBuilder
 
     public IBuilder Reset()
     {
-        this.brand = "ICKER";
+        this.brand = new Brand("ICKER");
         this.height = 120;
         this.width = 100;
         this.depth = 75;
@@ -23,7 +23,7 @@ public class TableBuilder : IBuilder
         this.price = 200.0;
         return this;
     }
-    public IBuilder setBrand(string brand)
+    public IBuilder setBrand(Brand brand)
     {
         this.brand = brand;
         return this;

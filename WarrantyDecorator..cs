@@ -1,6 +1,4 @@
 // Decorator Pattern - WarrantyDecorator (ConcreteDecorator)
-using System.Collections;
-
 namespace SDP_ASG;
 
 public class WarrantyDecorator : FurnitureDecorator

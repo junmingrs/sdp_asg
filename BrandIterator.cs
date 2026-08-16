@@ -3,15 +3,15 @@
 public class BrandIterator : IIterator
 {
     private IReadOnlyList<FurnitureComponent> fc;
-    private string brand;
+    private string brandName;
     private int position = 0;
 
-    public string Brand { get { return brand; } set { brand = value; } }
+    public string Brand { get { return brandName; } set { brandName = value; } }
 
-    public BrandIterator(IReadOnlyList<FurnitureComponent> fc, string brand)
+    public BrandIterator(IReadOnlyList<FurnitureComponent> fc, string brandName)
     {
         this.fc = fc;
-        this.brand = brand;
+        this.brandName = brandName;
     }
 
     public bool hasNext()
@@ -26,7 +26,7 @@ public class BrandIterator : IIterator
             if (fc is Furniture)
             {
                 Furniture f = (Furniture)fc;
-                if (f.Brand == this.brand)
+                if (f.Brand.getBrandName() == this.brandName)
                 {
                     return true;
                 }

@@ -2,7 +2,7 @@ namespace SDP_ASG;
 
 public abstract class Furniture : FurnitureComponent
 {
-    private string brand;
+    private Brand brand;
     private string type;
     private string colour;
     private string material;
@@ -11,7 +11,7 @@ public abstract class Furniture : FurnitureComponent
     private int depth;
     private double price;
 
-    public string Brand { get { return brand; } set { brand = value; } }
+    public Brand Brand { get { return brand; } set { brand = value; } }
     public string Type { get { return type; } set { type = value; } }
     public string Colour { get { return colour; } set { colour = value; } }
     public string Material { get { return material; } set { material = value; } }
@@ -20,7 +20,7 @@ public abstract class Furniture : FurnitureComponent
     public int Depth { get { return depth; } set { depth = value; } }
 
     public Furniture() { }
-    public Furniture(string brand, string type, string colour, string material, int height, int width, int depth, double price)
+    public Furniture(Brand brand, string type, string colour, string material, int height, int width, int depth, double price)
     {
         this.brand = brand;
         this.type = type;
@@ -34,7 +34,7 @@ public abstract class Furniture : FurnitureComponent
 
     public virtual string getDescription()
     {
-        return $"{this.type}: {this.brand}, {this.colour}, {this.material} of {this.height}cm x{this.width}cm x{this.depth}cm";
+        return $"{this.type}: {this.brand.getBrandName()}, {this.colour}, {this.material} of {this.height}cm x{this.width}cm x{this.depth}cm";
     }
 
     public virtual double getPrice()

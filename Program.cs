@@ -11,34 +11,34 @@ FurnitureComponent beds = new FurnitureCategory("Bed");
 FurnitureComponent tables = new FurnitureCategory("Table");
 FurnitureComponent chairs = new FurnitureCategory("Chair");
 
-sofas.add(sofaBuilder.setColour("Grey").setMaterial("Fabric").setDimensions(80, 30, 95).setBrand("ICKER").setType("Sofa").setPrice(450).build());
-tables.add(tableBuilder.setColour("Brown").setMaterial("Wood").setDimensions(120, 75, 60).setBrand("ICKER").setType("Table").setPrice(220).build());
-beds.add(bedBuilder.setColour("White").setMaterial("Wood").setDimensions(200, 120, 50).setBrand("ICKER").setType("Bed").setPrice(775).build());
-chairs.add(chairBuilder.setColour("Black").setMaterial("Leather").setDimensions(60, 28, 25).setBrand("ICKER").setType("Chair").setPrice(75).build());
+Brand icker = new Brand("ICKER");
+Brand ashley = new Brand("Ashley");
 
-sofas.add(sofaBuilder.setColour("Grey").setMaterial("Leather").setDimensions(120, 30, 105).setBrand("Ashley").setType("Sofa").setPrice(500).build());
-tables.add(tableBuilder.setColour("Brown").setMaterial("Wood").setDimensions(90, 70, 80).setBrand("Ashley").setType("Table").setPrice(300).build());
-beds.add(bedBuilder.setColour("White").setMaterial("Metal").setDimensions(300, 120, 75).setBrand("Ashley").setType("Bed").setPrice(1050).build());
-chairs.add(chairBuilder.setColour("Black").setMaterial("Fabric").setDimensions(80, 30, 30).setBrand("Ashley").setType("Chair").setPrice(90).build());
+sofas.add(sofaBuilder.setColour("Grey").setMaterial("Fabric").setDimensions(80, 30, 95).setBrand(icker).setType("Sofa").setPrice(450).build());
+tables.add(tableBuilder.setColour("Brown").setMaterial("Wood").setDimensions(120, 75, 60).setBrand(icker).setType("Table").setPrice(220).build());
+beds.add(bedBuilder.setColour("White").setMaterial("Wood").setDimensions(200, 120, 50).setBrand(icker).setType("Bed").setPrice(775).build());
+chairs.add(chairBuilder.setColour("Black").setMaterial("Leather").setDimensions(60, 28, 25).setBrand(icker).setType("Chair").setPrice(75).build());
+
+sofas.add(sofaBuilder.setColour("Grey").setMaterial("Leather").setDimensions(120, 30, 105).setBrand(ashley).setType("Sofa").setPrice(500).build());
+tables.add(tableBuilder.setColour("Brown").setMaterial("Wood").setDimensions(90, 70, 80).setBrand(ashley).setType("Table").setPrice(300).build());
+beds.add(bedBuilder.setColour("White").setMaterial("Metal").setDimensions(300, 120, 75).setBrand(ashley).setType("Bed").setPrice(1050).build());
+chairs.add(chairBuilder.setColour("Black").setMaterial("Fabric").setDimensions(80, 30, 30).setBrand(ashley).setType("Chair").setPrice(90).build());
 root.add(sofas);
 root.add(tables);
 root.add(beds);
 root.add(chairs);
 
-Brand ikea = new Brand("IKEA");
-Brand ashley = new Brand("Ashley");
 Customer Custtest1 = new Customer("Dummy1", "thisisafake@email.com", "ICKCUS0001");
 Customer Custtest2 = new Customer("Dummy2", "lwkymightbeareal@email.com", "ICKCUS0002");
 Employee Emptest1 = new Employee("EmployeeDummy1", "ICKEMP0001");
 Employee Emptest2 = new Employee("EmployeeDummy2", "ICKEMP0002");
-List<Brand> brands = new List<Brand> { ikea, ashley };
+List<Brand> brands = new List<Brand> { icker, ashley };
 List<Customer> customers = new List<Customer> { Custtest1, Custtest2 };
 List<Employee> employees = new List<Employee> { Emptest1, Emptest2 };
 List<Order> orders = new List<Order>();
 Customer? currentCustomer = null;
 Employee? currentEmployee = null;
 
-// ── MENUS ──────────────────────────────────
 void mainMenu()
 {
     int choice = -1;
@@ -50,7 +50,6 @@ void mainMenu()
         Console.WriteLine("1) Create new customer");
         Console.WriteLine("2) Login as customer");
         Console.WriteLine("3) Login as employee");
-        // Console.WriteLine("4) Create new Employee");
         Console.WriteLine("0) Exit");
         Console.Write("Your choice? ");
 
@@ -90,7 +89,7 @@ async void EmployeeMenu()
         Console.Write("Your choice? ");
 
         if (!int.TryParse(Console.ReadLine(), out employeeChoice)) employeeChoice = -1;
-        
+
         switch (employeeChoice)
         {
             case 1: iterateEverything(); break;
@@ -102,7 +101,6 @@ async void EmployeeMenu()
             case 7: PrepareOrder(orders); break;
             case 8: DeliverOrder(orders); break;
             case 9: await MarkOrderAsDelivered(orders); break;
-            // case 10: AddAddOns(root); break; - Technically should never be called | here for testing reasons
             case 0: currentEmployee = null; Console.WriteLine(" "); Console.WriteLine("Logging Out..."); break;
             default: Console.WriteLine(" "); Console.WriteLine("Invalid choice."); break;
         }
@@ -211,14 +209,14 @@ Employee? EmployeeLogin(List<Employee> employees)
     if (int.TryParse(Console.ReadLine(), out int idx) && idx >= 1 && idx <= employees.Count)
     {
         Console.Write("Enter Password: ");
-        string password = Console.ReadLine();
+        string? password = Console.ReadLine();
         Employee e = employees[idx - 1].logIn(password);
         if (e == null)
         {
             Console.WriteLine(" ");
             Console.WriteLine("Incorrect Password!");
             return null;
-        } 
+        }
         else
         {
             return e;
@@ -269,7 +267,8 @@ void Subscribe(Customer? customer, List<Brand> brands) // Added Whitespace... id
         Console.WriteLine(" ");
         brands[idx - 1].registerObserver(customer);
     }
-    else { Console.WriteLine(" "); Console.WriteLine("Invalid choice."); };
+    else { Console.WriteLine(" "); Console.WriteLine("Invalid choice."); }
+    ;
 }
 
 void Unsubscribe(Customer? customer, List<Brand> brands) // Changed to only display brands customer is subscribed to + Added Whitespace
@@ -290,7 +289,7 @@ void Unsubscribe(Customer? customer, List<Brand> brands) // Changed to only disp
     if (subscribedBrands.Count() == 0)
     {
         Console.WriteLine("You are not subscribed to any Brands yet.");
-    } 
+    }
     else
     {
         int i = 1;
@@ -339,58 +338,6 @@ void AddOffer(List<Brand> brands)
     else Console.WriteLine("Invalid choice.");
 }
 
-void AddAddOns(FurnitureComponent root) // Has been removed take note
-{
-    /*
-    Console.WriteLine("\n--- Available Furniture ---");
-    IIterator it = root.createIterator("Normal", "");
-    List<Furniture> furnitureList = new List<Furniture>();
-    int count = 1;
-    while (it.hasNext())
-    {
-        FurnitureComponent c = (FurnitureComponent)it.next()!;
-        if (c is Furniture f)
-        {
-            Console.WriteLine($"{count}) {f.getDescription()} - ${f.getPrice():F2}");
-            furnitureList.Add(f);
-            count++;
-        }
-    }
-
-    if (furnitureList.Count == 0) { Console.WriteLine("No furniture available."); return; }
-
-
-    Console.Write("Select furniture: ");
-    if (!int.TryParse(Console.ReadLine(), out int idx) || idx < 1 || idx > furnitureList.Count)
-    {
-        Console.WriteLine("Invalid choice."); return;
-    }
-
-    Furniture furniture = furnitureList[idx - 1];
-    Console.WriteLine($"\nSelected: {furniture.getDescription()} - ${furniture.getPrice():F2}");
-
-    Console.Write("Add warranty? (1 = 1 year, 2 = 2 years, 0 = no): ");
-    string w = Console.ReadLine() ?? "0";
-    if (w == "1") furniture = new WarrantyDecorator(furniture, 1);
-    else if (w == "2") furniture = new WarrantyDecorator(furniture, 2);
-
-    Console.Write("Add installation? (y/n): ");
-    if ((Console.ReadLine() ?? "").ToLower() == "y")
-    {
-        string date = "";
-        while (date.Length == 0)
-        {
-            Console.Write("Enter date (e.g. 2026-09-01): ");
-            date = Console.ReadLine() ?? "";
-            if (date.Length == 0) Console.WriteLine("Date cannot be empty!");
-        }
-        furniture = new InstallationDecorator(furniture, date);
-    }
-
-    Console.WriteLine($"\n✓ Final: {furniture.getDescription()} - ${furniture.getPrice():F2}");
-    */
-}
-
 void AddFurniture(FurnitureComponent root)
 {
     Console.WriteLine("\n=== Add Furniture ===");
@@ -424,7 +371,28 @@ void AddFurniture(FurnitureComponent root)
 
 void PromptFurniture(IBuilder builder, string category, FurnitureComponent root)
 {
-    string brand = PromptString($"Brand (default: ICKER)", "ICKER");
+
+    Brand? brandClass = null;
+    while (brandClass == null)
+    {
+        Console.WriteLine("List of all available brands:");
+        foreach (Brand b in brands) 
+        {
+            Console.WriteLine(b.getBrandName());
+        }
+        string brand = PromptString($"Brand (default: ICKER)", "ICKER");
+        foreach (Brand b in brands)
+        {
+            if (b.getBrandName() == brand)
+            {
+                brandClass = b;
+            }
+        }
+        if (brandClass == null)
+        {
+            Console.WriteLine("Please select an available brand.");
+        }
+    }
     string type = PromptString($"Type (default: {category})", category);
     string colour = PromptString($"Colour (default: White)", "White");
     string materialDefault = category switch
@@ -448,7 +416,7 @@ void PromptFurniture(IBuilder builder, string category, FurnitureComponent root)
 
     Furniture furniture = builder
         .setType(type)
-        .setBrand(brand)
+        .setBrand(brandClass)
         .setColour(colour)
         .setMaterial(material)
         .setDimensions(height, width, depth)
@@ -525,12 +493,12 @@ void PrepareOrder(List<Order> orders)
             Console.WriteLine($"{i}) {order.OrderID}");
             ordersToPrepare.Add(order);
             i++;
-        }  
+        }
     }
     if (ordersToPrepare.Count == 0)
     {
         Console.WriteLine("There are no Orders to Prepare");
-    } 
+    }
     else
     {
         Console.Write("\nSelect Order to Prepare: ");
@@ -625,7 +593,7 @@ void CommandInterface(Customer customer)
     ReorderFromHistoryCommand ROFHC = new ReorderFromHistoryCommand(customer);
     customer.addCommand(LOC);
     customer.addCommand(ROFHC);
-    
+
     int commandchoice = -1;
     while (commandchoice != 0)
     {
@@ -652,7 +620,7 @@ void CreateOrder(Customer customer)
     if (customer.OrderList.Count() != 0 && customer.OrderList[^1].State is CreatedState)
     {
         order = customer.OrderList[^1];
-    } 
+    }
     else
     {
         order = new Order(orders.Count());
@@ -674,10 +642,10 @@ void CreateOrder(Customer customer)
             if (fc is Furniture f)
             {
                 furnitures.Add(f);
-                string[] details = [f.Type, f.Brand, f.Colour, f.getPrice().ToString("0.00")];
+                string[] details = [f.Type, f.Brand.getBrandName(), f.Colour, f.getPrice().ToString("0.00")];
                 Console.WriteLine($"{i}) {details[0]}: {details[1]}, {details[2]} - ${details[3]}");
                 i++;
-            } 
+            }
         }
         Console.WriteLine(" ");
         Console.WriteLine("1) View Item Details");
@@ -689,7 +657,7 @@ void CreateOrder(Customer customer)
         Console.Write("Your choice? ");
 
         if (!int.TryParse(Console.ReadLine(), out orderchoice)) orderchoice = -1;
-  
+
         switch (orderchoice)
         {
             case 1: ViewItemDetail(furnitures); break;
@@ -710,7 +678,7 @@ void CancelOrder(Customer customer)
         orders.Remove(cancelled);
     }
 }
-void ViewItemDetail(List<Furniture> furnitures) 
+void ViewItemDetail(List<Furniture> furnitures)
 {
     Console.Write("\nSelect Item to View: ");
     if (int.TryParse(Console.ReadLine(), out int idx) && idx >= 1 && idx <= furnitures.Count())
@@ -745,7 +713,7 @@ void AddItemIntoOrder(List<Furniture> furnitures, Order order)
             oi = new InstallationDecorator(oi, date);
         }
         Console.WriteLine(" ");
-        order.addItem(oi);   
+        order.addItem(oi);
     }
     else
     {
