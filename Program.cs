@@ -68,7 +68,7 @@ void mainMenu()
     }
 }
 
-void EmployeeMenu()
+async void EmployeeMenu()
 {
     int employeeChoice = -1;
     while (employeeChoice != 0)
@@ -101,7 +101,7 @@ void EmployeeMenu()
             case 6: AddOffer(brands); break;
             case 7: PrepareOrder(orders); break;
             case 8: DeliverOrder(orders); break;
-            case 9: MarkOrderAsDelivered(orders); break;
+            case 9: await MarkOrderAsDelivered(orders); break;
             // case 10: AddAddOns(root); break; - Technically should never be called | here for testing reasons
             case 0: currentEmployee = null; Console.WriteLine(" "); Console.WriteLine("Logging Out..."); break;
             default: Console.WriteLine(" "); Console.WriteLine("Invalid choice."); break;
