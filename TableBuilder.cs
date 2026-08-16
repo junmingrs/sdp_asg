@@ -3,24 +3,24 @@ namespace SDP_ASG;
 public class TableBuilder : IBuilder
 {
     private string brand = "ICKER";
-    private int height = 10;
-    private int width = 10;
-    private int depth = 10;
+    private int height = 120;
+    private int width = 100;
+    private int depth = 75;
     private string type = "Table";
-    private string colour = "White";
+    private string colour = "Maple";
     private string material = "Wood";
-    private double price = 30.0;
+    private double price = 200.0;
 
     public IBuilder Reset()
     {
         this.brand = "ICKER";
-        this.height = 10;
-        this.width = 10;
-        this.depth = 10;
+        this.height = 120;
+        this.width = 100;
+        this.depth = 75;
         this.type = "Table";
-        this.colour = "White";
+        this.colour = "Maple";
         this.material = "Wood";
-        this.price = 30.0;
+        this.price = 200.0;
         return this;
     }
     public IBuilder setBrand(string brand)
