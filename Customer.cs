@@ -52,7 +52,7 @@ public class Customer : Observer
     {
         if (orderList.Count == 0)
         {
-            Console.WriteLine("No Orders that can be cancelled");
+            Console.WriteLine("\nNo Orders that can be cancelled");
             return null;
         }
         Console.WriteLine("\n----- All Orders -----");

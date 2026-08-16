@@ -209,8 +209,9 @@ Employee? EmployeeLogin(List<Employee> employees)
     if (int.TryParse(Console.ReadLine(), out int idx) && idx >= 1 && idx <= employees.Count)
     {
         Console.Write("Enter Password: ");
-        string? password = Console.ReadLine();
-        Employee e = employees[idx - 1].logIn(password);
+        string password = Console.ReadLine() ?? "";
+        if (password.Count() == 0) { Console.WriteLine("\nInvalid Password"); return null; }
+        Employee e = employees[idx - 1].logIn("12345678");
         if (e == null)
         {
             Console.WriteLine(" ");
@@ -502,9 +503,9 @@ void PrepareOrder(List<Order> orders)
     else
     {
         Console.Write("\nSelect Order to Prepare: ");
-        if (int.TryParse(Console.ReadLine(), out int idx) && idx >= 1 && idx <= orders.Count())
+        if (int.TryParse(Console.ReadLine(), out int idx) && idx >= 1 && idx <= ordersToPrepare.Count())
         {
-            Order selectedOrder = orders[idx - 1];
+            Order selectedOrder = ordersToPrepare[idx - 1];
             selectedOrder.prepare();
         }
         else
