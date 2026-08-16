@@ -3,22 +3,22 @@ namespace SDP_ASG;
 public class ChairBuilder : IBuilder
 {
     private string brand = "ICKER";
-    private int height = 10;
-    private int width = 10;
-    private int depth = 10;
+    private int height = 45;
+    private int width = 50;
+    private int depth = 50;
     private string type = "Chair";
-    private string colour = "White";
+    private string colour = "Black";
     private string material = "Wood";
     private double price = 20.0;
 
     public IBuilder Reset()
     {
         this.brand = "ICKER";
-        this.height = 10;
-        this.width = 10;
-        this.depth = 10;
+        this.height = 45;
+        this.width = 50;
+        this.depth = 50;
         this.type = "Chair";
-        this.colour = "White";
+        this.colour = "Black";
         this.material = "Wood";
         this.price = 20.0;
         return this;
